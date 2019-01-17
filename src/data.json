@@ -1,0 +1,20 @@
+{
+    "javascript": [
+        "js",
+        "mjs"
+    ],
+    "python": [
+        "py",
+        "py3"
+    ],
+    "cpp": [
+        "cpp",
+        "cc"
+    ],
+    "c": [
+        "c"
+    ],
+    "java": [
+        "java"
+    ]
+}
