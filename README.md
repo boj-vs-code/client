@@ -24,8 +24,8 @@ This extension contributes the following settings:
 
 * `boj.enable`: enable/disable this extension  
 * `boj.use_cache`: enable/disable to use cache
-* `boj.account.id`: boj id
-* `boj.account.pw`: boj pw
+* `boj.account.id`: your boj id
+* `boj.account.pw`: your boj pw
 
 ## Known Issues
 
