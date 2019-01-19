@@ -1,6 +1,5 @@
-const process = require("process");
-const lib = require("./lib");
-const vscode = require('vscode');
+import * as process from "process";
+import * as lib from "./lib";
 
 const toLanguage = lib.toLanguage;
 
@@ -17,7 +16,7 @@ if (filename === "solve") { // directory will have the problem number, if else
 } else if (filename.indexOf('-') !== -1 && NaN !== Number(filename.split('-')[0])) { // if filename has - to notice problem name
     
 } else {
-    vscode.window.showErrorMessage("BOJ Can't know the problem number!");
+    // vscode.window.showErrorMessage("BOJ Can't know the problem number!");
     // SHOW WARNING ERROR: Cant know problem number
 }
 
