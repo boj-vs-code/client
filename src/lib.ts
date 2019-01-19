@@ -23,3 +23,7 @@ export function toLanguage(extension: string): string {
     }
     return "unknown"
 }
+
+export function isNumber(value: string) {
+    return NaN !== Number(value)
+}
