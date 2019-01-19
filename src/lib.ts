@@ -27,3 +27,7 @@ export function toLanguage(extension: string): string {
 export function isNumber(value: string) {
     return NaN !== Number(value)
 }
+
+export function hasProblemNumberAndOthers(value: string) {
+    return value.indexOf('-') !== -1 && isNumber(value.split('-')[0])
+}
