@@ -24,10 +24,14 @@ export function toLanguage(extension: string): string {
     return "unknown"
 }
 
-export function isNumber(value: string) {
+export function isNumber(value: string): boolean {
     return NaN !== Number(value)
 }
 
-export function hasProblemNumberAndOthers(value: string) {
+export function hasProblemNumberAndOthers(value: string): boolean {
     return value.indexOf('-') !== -1 && isNumber(value.split('-')[0])
+}
+
+export function getProblemNumber(value: string): string {
+    return value.split('-')[0];
 }
