@@ -16,5 +16,11 @@
     ],
     "java": [
         "java"
+    ],
+    "typescript": [
+        "ts"
+    ],
+    "json": [
+        "json"
     ]
 }

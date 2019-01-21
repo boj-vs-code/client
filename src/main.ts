@@ -19,4 +19,4 @@ if (filename === "solve") {
     // SHOW WARNING ERROR: Cant know problem number
 }
 
-console.log(filename, toLanguage(extname), dirname);
+console.log(filename, language, dirname);
