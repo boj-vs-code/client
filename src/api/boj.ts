@@ -11,7 +11,7 @@ class Account {
         return this.id
     }
 
-    public getPw(): string {
+    public getPassword(): string {
         return this.pw
     }
 }
