@@ -10,10 +10,16 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onCommand:extension.helloWorld",
+		"onLanguage:python",
+		"workspaceContains:/.boj"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"keybindings": [{
+			"command":"extension.helloWorld",
+			"key":"ctrl+f1"
+		}],
 		"commands": [
 			{
 				"command": "extension.helloWorld",
