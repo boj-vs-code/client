@@ -1,3 +1,5 @@
+import Axios from "axios";
+
 class Account {
     private id: string
     private pw: string
@@ -26,15 +28,43 @@ class TestCase {
     }
 }
 
-class Problem {
-    private description: string
-    private inputDescription: string
-    private outputDescription: string
-    private testcases: Array<TestCase>
 
+class Cookie {
+    constructor(public name: string, public value: string) {}
 }
 
-export class BOJSession {
+Axios.get('https://acmicpc.net/').then(resp => {
+    let cookies: Array<Cookie> = resp.headers['set-cookie']
+        .map((x: string) => x.split(';')[0].split('='))
+        .map((x: Array<string>) => new Cookie(x[0], x[1]));
+
+    console.log(cookies.filter(x => x.name === "OnlineJudge"));
+
+    console.log(cookies);
+    // console.log(resp.headers['set-cookie'][1].split(';')[0].split('='));
+})
+
+class Problem {
+    constructor (
+        private _description: string,
+        private _inputDescription: string,
+        private _outputDescription: string,
+        private _testcases: Array<TestCase>) {}
+
+        get getDescription() {
+            return this._description;
+        }
+
+        get getInputDescription => _
+}
+
+export class BOJ {
+    static getProblem(problemNumber: Number): Problem {
+
+    }
+}
+
+class BOJSession {
     private sessionId: string
     private account: Account
     
