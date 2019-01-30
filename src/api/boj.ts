@@ -1,13 +1,8 @@
 import Axios from "axios";
+import { Session } from "inspector";
 
 class Account {
-    private id: string
-    private pw: string
-
-    constructor(id: string, pw: string) {
-        this.id = id
-        this.pw = pw
-    }
+    constructor(private id: string, private pw: string) {}
 
     public getId(): string {
         return this.id
@@ -58,26 +53,36 @@ class Problem {
         get getInputDescription => _
 }
 
+class Parser {
+    static getProblem
+}
+
 export class BOJ {
+    static session: BOJSession;
+    static initializeWithAccount() {
+
+    }
+
+    static initializeParser(session: BOJSession) {
+
+    }
+
     static getProblem(problemNumber: Number): Problem {
 
     }
 }
 
-class BOJSession {
-    private sessionId: string
-    private account: Account
+export class BOJSession {
+    private sessionId: string | undefined = undefined
     
-    constructor(id: string, pw: string) {
-        this.account = new Account(id, pw)
+    constructor(private account: Account) {}
+
+    public signin() {
+        
     }
 
-    public login() {
-
-    }
-
-    public isLoggedIn() {
-
+    public isSignedIn() {
+        return undefined === this.sessionId
     }
 
     public submit(problem: Number) {
