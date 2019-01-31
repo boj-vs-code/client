@@ -10,15 +10,30 @@
             "type": "shell",
             "command": "node",
             "args": [
-                "./src/main.js",
+                "./out/main.js",
                 "${fileBasenameNoExtension}",
                 "${fileExtname}",
                 "${relativeFile}"
             ],
             "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+                "kind": "build"
+            },
+            "problemMatcher": []
         },
+        {
+            "label": "Typescript build",
+            "type": "shell",
+            "command": "./node_modules/.bin/tsc",
+            "args": [
+                "-p",
+                "tsconfig.json"
+            ],
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": [
+                "$tsc"
+            ]
+        }
     ]
 }

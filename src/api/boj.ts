@@ -1,16 +1,9 @@
 import Axios from "axios";
 import { Session } from "inspector";
+import { parse, HTMLElement, TextNode } from "node-html-parser";
 
 class Account {
-    constructor(private id: string, private pw: string) {}
-
-    public getId(): string {
-        return this.id
-    }
-
-    public getPassword(): string {
-        return this.pw
-    }
+    constructor(public id: string, public pw: string) {}
 }
 
 class TestCase {
@@ -28,17 +21,6 @@ class Cookie {
     constructor(public name: string, public value: string) {}
 }
 
-Axios.get('https://acmicpc.net/').then(resp => {
-    let cookies: Array<Cookie> = resp.headers['set-cookie']
-        .map((x: string) => x.split(';')[0].split('='))
-        .map((x: Array<string>) => new Cookie(x[0], x[1]));
-
-    console.log(cookies.filter(x => x.name === "OnlineJudge"));
-
-    console.log(cookies);
-    // console.log(resp.headers['set-cookie'][1].split(';')[0].split('='));
-})
-
 class Problem {
     constructor (
         private _description: string,
@@ -49,15 +31,25 @@ class Problem {
         get getDescription() {
             return this._description;
         }
-
-        get getInputDescription => _
 }
 
-class Parser {
-    static getProblem
-}
+export default class BOJ {
+    static test() {
+        Axios.get('https://acmicpc.net/problem/1080').then(resp => {
+            let cookies: Array<Cookie> = resp.headers['set-cookie']
+                .map((x: string) => x.split(';')[0].split('='))
+                .map((x: Array<string>) => new Cookie(x[0], x[1]));
 
-export class BOJ {
+            console.log(cookies.filter(x => x.name === "OnlineJudge"));
+
+            console.log(cookies);
+            
+            const root: HTMLElement = <HTMLElement>parse(resp.data);
+            console.log(root.querySelector("#problem_title").text);
+            // console.log(resp.headers['set-cookie'][1].split(';')[0].split('='));
+        });
+    }
+
     static session: BOJSession;
     static initializeWithAccount() {
 
@@ -68,7 +60,7 @@ export class BOJ {
     }
 
     static getProblem(problemNumber: Number): Problem {
-
+        return new Problem("description", "input", "output", []);
     }
 }
 

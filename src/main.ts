@@ -1,5 +1,6 @@
 import * as process from "process";
 import { toLanguage, isNumber, hasProblemNumberAndOthers } from "./lib";
+import BOJ from "./api/boj";
 
 const argv = process.argv.slice(2);
 
@@ -18,5 +19,7 @@ if (filename === "solve") {
     // vscode.window.showErrorMessage("BOJ Can't know the problem number!");
     // SHOW WARNING ERROR: Cant know problem number
 }
+
+BOJ.test();
 
 console.log(filename, language, dirname);
