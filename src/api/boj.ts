@@ -25,6 +25,15 @@ class Cookie {
     constructor(public name: string, public value: string) {}
 }
 
+interface IProblemMetadata {
+    timeLimit?: string,
+    memoryLimit?: string,
+    submitCount?: string|Number,
+    successCount?: string|Number,
+    successPeopleCount?: string|Number,
+    answerPercent?: string|Number,
+}
+
 class Problem {
     constructor (
         public title: string,
@@ -32,19 +41,23 @@ class Problem {
         public inputDescription: string,
         public outputDescription: string,
         public testcases: Array<TestCase>,
-        public metadata?: Map<string, string>) {}
+        public metadata?: IProblemMetadata) {}
+
+    toString() {
+        return '1';
+    }
 }
 
 export default class BOJ {
-    static test() {
-        Axios.get('https://acmicpc.net/problem/1080').then(resp => {
-            let cookies: Array<Cookie> = resp.headers['set-cookie']
-                .map((x: string) => x.split(';')[0].split('='))
-                .map((x: Array<string>) => new Cookie(x[0], x[1]));
+    static getProblem(problemNumber: Number): Problem {
+        Axios.get(`https://acmicpc.net/problem/${problemNumber}`).then(resp => {
+            // let cookies: Array<Cookie> = resp.headers['set-cookie']
+            //     .map((x: string) => x.split(';')[0].split('='))
+            //     .map((x: Array<string>) => new Cookie(x[0], x[1]));
 
-            console.log(cookies.filter(x => x.name === "OnlineJudge"));
+            // console.log(cookies.filter(x => x.name === "OnlineJudge"));
 
-            console.log(cookies);
+            // console.log(cookies);
 
             const options = {
                 lowerCaseTagName: false,  // convert tag name to lower case (hurt performance heavily)
@@ -55,22 +68,16 @@ export default class BOJ {
             
             const root: HTMLElement = <HTMLElement>parse(resp.data, options);
             const problemInfoElements = root.querySelector("#problem-info").childNodes[3].childNodes[1].childNodes;
-            const testcaseElements = root.querySelectorAll(".");
 
             const testcases: Array<TestCase> = new Array<TestCase>();
 
             // get testcase
-
             for (let i = 1; i <= 10; ++i) {
                 const inputElement = root.querySelector(`#sample-input-${i}`);
                 const outputElement = root.querySelector(`#sample-output-${i}`);
                 if (inputElement === null || outputElement === null) {
                     break;
                 }
-
-                // console.log("Text", inputElement.rawText);
-
-                "".replace
 
                 const input = inputElement.text.trim().replace(/\r\n/g, '\n');
                 const output = outputElement.text.trim().replace(/\r\n/g, '\n');
@@ -83,12 +90,16 @@ export default class BOJ {
             const inputDescription = root.querySelector("#problem_input").text.trim();
             const outputDescription = root.querySelector("#problem_output").text.trim();
             const [timeLimit, memoryLimit, submitCount, successCount, successPeopleCount, answerPercent] = problemInfoElements.map(x => x.rawText).filter(x => x.indexOf('\t') === -1);
+            const metadata = {
+                timeLimit: timeLimit,
+                memoryLimit: memoryLimit,
+                submitCount: submitCount,
+                successCount: successCount,
+                successPeopleCount: successPeopleCount,
+                answerPercent: answerPercent,
+            }
 
-            console.log("Title: ", title);
-            console.log("Description: ", description);
-            console.log("InputDescription: ", inputDescription);
-            console.log("OutputDescription: ", outputDescription);
-            console.log(testcases);
+            return new Problem(title, description, inputDescription, outputDescription, testcases, metadata)
         });
     }
 
@@ -99,10 +110,6 @@ export default class BOJ {
 
     static initializeParser(session: BOJSession) {
 
-    }
-
-    static getProblem(problemNumber: Number): Problem {
-        return new Problem("title", "description", "input", "output", []);
     }
 }
 
