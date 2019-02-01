@@ -42,15 +42,16 @@ class Problem {
         public outputDescription: string,
         public testcases: Array<TestCase>,
         public metadata?: IProblemMetadata) {}
-
-    toString() {
-        return '1';
+        
+        toString() {
+            return '1';
+        }
     }
-}
 
 export default class BOJ {
-    static getProblem(problemNumber: Number): Problem {
-        Axios.get(`https://acmicpc.net/problem/${problemNumber}`).then(resp => {
+    static session: BOJSession;
+    static async getProblem(problemNumber: Number): Promise<Problem> {
+        return await Axios.get(`https://acmicpc.net/problem/${problemNumber}`).then(resp => {
             // let cookies: Array<Cookie> = resp.headers['set-cookie']
             //     .map((x: string) => x.split(';')[0].split('='))
             //     .map((x: Array<string>) => new Cookie(x[0], x[1]));
@@ -99,11 +100,10 @@ export default class BOJ {
                 answerPercent: answerPercent,
             }
 
-            return new Problem(title, description, inputDescription, outputDescription, testcases, metadata)
+            return new Problem(title, description, inputDescription, outputDescription, testcases, metadata);
         });
     }
 
-    static session: BOJSession;
     static initializeWithAccount() {
 
     }
