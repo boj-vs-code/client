@@ -14,6 +14,10 @@ class TestCase {
         this.input = input
         this.output = output
     }
+
+    public toString() {
+        return `${this.input} || ${this.output}`;
+    }
 }
 
 
@@ -23,14 +27,12 @@ class Cookie {
 
 class Problem {
     constructor (
-        private _description: string,
-        private _inputDescription: string,
-        private _outputDescription: string,
-        private _testcases: Array<TestCase>) {}
-
-        get getDescription() {
-            return this._description;
-        }
+        public title: string,
+        public description: string,
+        public inputDescription: string,
+        public outputDescription: string,
+        public testcases: Array<TestCase>,
+        public metadata?: Map<string, string>) {}
 }
 
 export default class BOJ {
@@ -43,10 +45,50 @@ export default class BOJ {
             console.log(cookies.filter(x => x.name === "OnlineJudge"));
 
             console.log(cookies);
+
+            const options = {
+                lowerCaseTagName: false,  // convert tag name to lower case (hurt performance heavily)
+                script: false,            // retrieve content in <script> (hurt performance slightly)
+                style: false,             // retrieve content in <style> (hurt performance slightly)
+                pre: true                // retrieve content in <pre> (hurt performance slightly)
+              }
             
-            const root: HTMLElement = <HTMLElement>parse(resp.data);
-            console.log(root.querySelector("#problem_title").text);
-            // console.log(resp.headers['set-cookie'][1].split(';')[0].split('='));
+            const root: HTMLElement = <HTMLElement>parse(resp.data, options);
+            const problemInfoElements = root.querySelector("#problem-info").childNodes[3].childNodes[1].childNodes;
+            const testcaseElements = root.querySelectorAll(".");
+
+            const testcases: Array<TestCase> = new Array<TestCase>();
+
+            // get testcase
+
+            for (let i = 1; i <= 10; ++i) {
+                const inputElement = root.querySelector(`#sample-input-${i}`);
+                const outputElement = root.querySelector(`#sample-output-${i}`);
+                if (inputElement === null || outputElement === null) {
+                    break;
+                }
+
+                // console.log("Text", inputElement.rawText);
+
+                "".replace
+
+                const input = inputElement.text.trim().replace(/\r\n/g, '\n');
+                const output = outputElement.text.trim().replace(/\r\n/g, '\n');
+
+                testcases.push(new TestCase(input, output));
+            }
+
+            const title = root.querySelector("#problem_title").text.trim();
+            const description = root.querySelector("#problem_description").text.trim();
+            const inputDescription = root.querySelector("#problem_input").text.trim();
+            const outputDescription = root.querySelector("#problem_output").text.trim();
+            const [timeLimit, memoryLimit, submitCount, successCount, successPeopleCount, answerPercent] = problemInfoElements.map(x => x.rawText).filter(x => x.indexOf('\t') === -1);
+
+            console.log("Title: ", title);
+            console.log("Description: ", description);
+            console.log("InputDescription: ", inputDescription);
+            console.log("OutputDescription: ", outputDescription);
+            console.log(testcases);
         });
     }
 
@@ -60,7 +102,7 @@ export default class BOJ {
     }
 
     static getProblem(problemNumber: Number): Problem {
-        return new Problem("description", "input", "output", []);
+        return new Problem("title", "description", "input", "output", []);
     }
 }
 
@@ -70,7 +112,7 @@ export class BOJSession {
     constructor(private account: Account) {}
 
     public signin() {
-        
+        // Axios.get()
     }
 
     public isSignedIn() {
