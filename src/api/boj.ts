@@ -1,6 +1,6 @@
 import Axios from "axios";
-import { Session } from "inspector";
 import { parse, HTMLElement, TextNode } from "node-html-parser";
+import * as fs from "fs";
 
 class Account {
     constructor(public id: string, public pw: string) {}
@@ -113,13 +113,27 @@ export default class BOJ {
     }
 }
 
+class Config {
+    public static initializeFromConfig() {
+        const config = fs.readFileSync('.bojconfig').toJSON();
+    }
+}
+
 export class BOJSession {
     private sessionId: string | undefined = undefined
     
     constructor(private account: Account) {}
 
+    private getAccountFromConfig() {
+        let something = fs.readFileSync('.bojconfig')
+    }
+
     public signin() {
-        // Axios.get()
+        Axios.post('https://acmicpc.net/signin', {
+            headers: {
+                Cookie: `OnlineJudge=${this.sessionId}`,
+            }
+        });
     }
 
     public isSignedIn() {
