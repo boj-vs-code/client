@@ -7,17 +7,7 @@ class Account {
 }
 
 class TestCase {
-    public input: string
-    public output: string
-
-    constructor(input: string, output: string) {
-        this.input = input
-        this.output = output
-    }
-
-    public toString() {
-        return `${this.input} || ${this.output}`;
-    }
+    constructor(public input: string, public output: string) {}
 }
 
 
@@ -42,11 +32,7 @@ class Problem {
         public outputDescription: string,
         public testcases: Array<TestCase>,
         public metadata?: IProblemMetadata) {}
-        
-        toString() {
-            return '1';
-        }
-    }
+}
 
 export default class BOJ {
     static session: BOJSession;
@@ -113,19 +99,27 @@ export default class BOJ {
     }
 }
 
+interface IBOJConfig {
+    id?: string,
+    password?: string,
+}
+
 class Config {
-    public static initializeFromConfig() {
-        const config = fs.readFileSync('.bojconfig').toJSON();
+    public static getConfigFromFile(): IBOJConfig {
+        let configFileContent = fs.readFileSync('.bojconfig').toString();
+        return JSON.parse(configFileContent);
     }
 }
 
 export class BOJSession {
-    private sessionId: string | undefined = undefined
-    
+    private static sessionId: string | undefined = undefined
+    private static config: Config | undefined = undefined
+
     constructor(private account: Account) {}
 
-    private getAccountFromConfig() {
-        let something = fs.readFileSync('.bojconfig')
+    private static initializeWithConfig() {
+        if (this.config === undefined)
+            this.config = Config.getConfigFromFile();
     }
 
     public signin() {
