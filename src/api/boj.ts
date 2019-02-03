@@ -158,15 +158,36 @@ export class BOJSession implements IJudgeSiteSession {
     }
 
     public submit(problem: number, language: Language, source: string) {
-        this.signin().then(resp => {
-                Axios.post('https://acmicpc.net/sumbit', {
-                    'source': '123',
-                }, {
-                    headers: {
-
-                    }
+        this.signin().then(async (resp) => {
+            const getCsrfKey = async () => {
+                return await Axios.get(`https://acmicpc.net/submit/${problem}`, {
+                headers: {
+                    'Cookie': this.sessionId,
+                }}).then(resp => {
+                    const root = <HTMLElement>parse(resp.data)
+                    return root.querySelector('input[name="csrf_key"]').text;
                 })
             }
-        )
+
+            const csrf_key = await getCsrfKey();
+
+            const data = {
+                'source': source,
+                'language': language.idx,
+                'problem_id': problem,
+                'csrf_key': csrf_key,
+                'code_open': 'open',
+            }
+
+            const headers = {
+                'Cookie': this.sessionId,
+            }
+
+            const config = {
+                headers: headers
+            }
+
+            Axios.post(`https://acmicpc.net/sumbit/${problem}`, data, config)
+        })
     }
 }
