@@ -114,9 +114,10 @@ class Config {
     }
 }
 
-interface Language {
-    name: string,
-    idx: number,
+export class Language {
+    constructor(
+        public name: string,
+        public idx: number) {}
 }
 
 interface IJudgeSiteSession {
