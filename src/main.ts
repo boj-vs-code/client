@@ -1,6 +1,7 @@
 import * as process from "process";
 import { toLanguage, isNumber, hasProblemNumberAndOthers } from "./lib";
-import BOJ from "./api/boj";
+import BOJ, { BOJSession, Language } from "./api/boj";
+import { O_SYNC } from "constants";
 
 const argv = process.argv.slice(2);
 
@@ -20,6 +21,14 @@ if (filename === "solve") {
     // SHOW WARNING ERROR: Cant know problem number
 }
 
-BOJ.test();
+(async () => {
+    const session = new BOJSession();
+    setTimeout(() => {
+        console.log(session.sessionId)
+        console.log(session.config)
+        session.submit(1000, new Language('python', 28), 'print(sum(list(map(int, input().split()))))')
+    }, 5000);
+    // console.log(problem);
+})()
 
 console.log(filename, language, dirname);
