@@ -27,7 +27,7 @@ if (filename === "solve") {
         console.log(session.sessionId)
         console.log(session.config)
         session.submit(1000, new Language('python', 28), 'print(sum(list(map(int, input().split()))))')
-    }, 5000);
+    }, 2000);
     // console.log(problem);
 })()
 

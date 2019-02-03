@@ -1,6 +1,7 @@
 import Axios from "axios";
 import { parse, HTMLElement, TextNode } from "node-html-parser";
 import * as fs from "fs";
+import * as qs from "querystring";
 
 class Account {
     constructor(public id: string, public pw: string) {}
@@ -16,7 +17,7 @@ export class Cookie {
     toString = (): string => `${this.name}=${this.value};`
 
     public static async getBOJSessionCookie(): Promise<Cookie> {
-        return await Axios.get('https://acmicpc.net/').then(resp => {
+        return await Axios.get('https://www.acmicpc.net/').then(resp => {
             let cookies: Array<Cookie> = resp.headers['set-cookie']
                 .map((x: string) => x.split(';')[0].split('='))
                 .map((x: Array<string>) => new Cookie(x[0], x[1]));
@@ -129,7 +130,7 @@ interface IJudgeSiteSession {
 
 class SessionInitilaizer {
     public static async initializeBOJSession(session: BOJSession) {
-        Axios.get('https://acmicpc.net/').then(resp => {
+        Axios.get('https://www.acmicpc.net/').then(resp => {
             let cookies: Array<Cookie> = resp.headers['set-cookie']
                 .map((x: string) => x.split(';')[0].split('='))
                 .map((x: Array<string>) => new Cookie(x[0], x[1]));
@@ -148,47 +149,65 @@ export class BOJSession implements IJudgeSiteSession {
     }
 
     public signin(): Promise<any> {
-        return Axios.post('https://acmicpc.net/signin', {
-            "login_user_id": this.config.id,
-            "login_password": this.config.password
-        }, {
-            headers: {
-                Cookie: this.sessionId,
-            }
+        while(this.sessionId.value === "unknown") {    }
+        console.log('log',this.sessionId.toString());
+        
+        const data = qs.stringify({
+            login_user_id: this.config.id,
+            login_password: this.config.password
+        })
+        
+        const headers = {
+            Cookie: this.sessionId.toString()
+        }
+
+        console.log(data)
+        
+        return Axios({
+            method: 'post',
+            url: 'https://www.acmicpc.net/signin',
+            data: data,
+            headers: headers
         });
     }
 
-    public submit(problem: number, language: Language, source: string) {
-        this.signin().then(async (resp) => {
-            const getCsrfKey = async () => {
-                return await Axios.get(`https://acmicpc.net/submit/${problem}`, {
+    public async submit(problem: number, language: Language, source: string) {
+        await this.signin();
+        const getCsrfKey = async () => {
+            console.log(`https://www.acmicpc.net/submit/${problem}`)
+            return await Axios({
+                method: 'get',
+                url: `https://www.acmicpc.net/submit/${problem}`,
                 headers: {
-                    'Cookie': this.sessionId,
-                }}).then(resp => {
-                    const root = <HTMLElement>parse(resp.data)
-                    return root.querySelector('input[name="csrf_key"]').text;
-                })
-            }
+                    Cookie: this.sessionId.toString(),
+                }
+            }).then(resp => {
+                const root: HTMLElement = <HTMLElement>parse(resp.data)
+                const csrfKeyElement = <HTMLElement>root.querySelector('#submit_form').childNodes[5];
+                return csrfKeyElement.rawAttributes.value;
+            })
+        }
 
-            const csrf_key = await getCsrfKey();
+        const csrf_key = await getCsrfKey();
+        console.log(csrf_key);
+        const data = qs.stringify({
+            'source': source,
+            'language': language.idx,
+            'problem_id': problem,
+            'csrf_key': csrf_key,
+            'code_open': 'open',
+        })
 
-            const data = {
-                'source': source,
-                'language': language.idx,
-                'problem_id': problem,
-                'csrf_key': csrf_key,
-                'code_open': 'open',
-            }
+        const headers = {
+            Cookie: this.sessionId.toString(),
+        }
 
-            const headers = {
-                'Cookie': this.sessionId,
-            }
-
-            const config = {
-                headers: headers
-            }
-
-            Axios.post(`https://acmicpc.net/sumbit/${problem}`, data, config)
+        console.log(`https://www.acmicpc.net/submit/${problem}`)
+        Axios({
+            method: 'post',
+            url: `https://www.acmicpc.net/submit/${problem}`,
+            data: data,
+            headers: headers
         })
     }
 }
