@@ -150,7 +150,6 @@ export class BOJSession implements IJudgeSiteSession {
 
     public signin(): Promise<any> {
         while(this.sessionId.value === "unknown") {    }
-        console.log('log',this.sessionId.toString());
         
         const data = qs.stringify({
             login_user_id: this.config.id,
@@ -160,8 +159,6 @@ export class BOJSession implements IJudgeSiteSession {
         const headers = {
             Cookie: this.sessionId.toString()
         }
-
-        console.log(data)
         
         return Axios({
             method: 'post',
@@ -174,7 +171,6 @@ export class BOJSession implements IJudgeSiteSession {
     public async submit(problem: number, language: Language, source: string) {
         await this.signin();
         const getCsrfKey = async () => {
-            console.log(`https://www.acmicpc.net/submit/${problem}`)
             return await Axios({
                 method: 'get',
                 url: `https://www.acmicpc.net/submit/${problem}`,
@@ -189,7 +185,7 @@ export class BOJSession implements IJudgeSiteSession {
         }
 
         const csrf_key = await getCsrfKey();
-        console.log(csrf_key);
+        
         const data = qs.stringify({
             'source': source,
             'language': language.idx,
@@ -202,7 +198,6 @@ export class BOJSession implements IJudgeSiteSession {
             Cookie: this.sessionId.toString(),
         }
 
-        console.log(`https://www.acmicpc.net/submit/${problem}`)
         Axios({
             method: 'post',
             url: `https://www.acmicpc.net/submit/${problem}`,
