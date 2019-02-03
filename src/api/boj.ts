@@ -11,8 +11,19 @@ class TestCase {
 }
 
 
-class Cookie {
+export class Cookie {
     constructor(public name: string, public value: string) {}
+    toString = (): string => `${this.name}=${this.value};`
+
+    public static async getBOJSessionCookie(): Promise<Cookie> {
+        return await Axios.get('https://acmicpc.net/').then(resp => {
+            let cookies: Array<Cookie> = resp.headers['set-cookie']
+                .map((x: string) => x.split(';')[0].split('='))
+                .map((x: Array<string>) => new Cookie(x[0], x[1]));
+
+            return cookies.filter(x => x.name === "OnlineJudge")[0];
+        })
+    }
 }
 
 interface IProblemMetadata {
@@ -38,14 +49,6 @@ export default class BOJ {
     static session: BOJSession;
     static async getProblem(problemNumber: Number): Promise<Problem> {
         return await Axios.get(`https://acmicpc.net/problem/${problemNumber}`).then(resp => {
-            // let cookies: Array<Cookie> = resp.headers['set-cookie']
-            //     .map((x: string) => x.split(';')[0].split('='))
-            //     .map((x: Array<string>) => new Cookie(x[0], x[1]));
-
-            // console.log(cookies.filter(x => x.name === "OnlineJudge"));
-
-            // console.log(cookies);
-
             const options = {
                 lowerCaseTagName: false,  // convert tag name to lower case (hurt performance heavily)
                 script: false,            // retrieve content in <script> (hurt performance slightly)
@@ -100,41 +103,70 @@ export default class BOJ {
 }
 
 interface IBOJConfig {
-    id?: string,
-    password?: string,
+    id: string,
+    password: string,
 }
 
 class Config {
-    public static getConfigFromFile(): IBOJConfig {
+    public static getBOJConfigFromFile(): IBOJConfig {
         let configFileContent = fs.readFileSync('.bojconfig').toString();
         return JSON.parse(configFileContent);
     }
 }
 
-export class BOJSession {
-    private static sessionId: string | undefined = undefined
-    private static config: Config | undefined = undefined
+interface Language {
+    name: string,
+    idx: number,
+}
 
-    constructor(private account: Account) {}
+interface IJudgeSiteSession {
+    sessionId: Cookie|undefined
 
-    private static initializeWithConfig() {
-        if (this.config === undefined)
-            this.config = Config.getConfigFromFile();
+    signin(): void;
+    submit(problem: number, language: Language, source: string): void;
+}
+
+class SessionInitilaizer {
+    public static async initializeBOJSession(session: BOJSession) {
+        Axios.get('https://acmicpc.net/').then(resp => {
+            let cookies: Array<Cookie> = resp.headers['set-cookie']
+                .map((x: string) => x.split(';')[0].split('='))
+                .map((x: Array<string>) => new Cookie(x[0], x[1]));
+
+            session.sessionId = cookies.filter(x => x.name === "OnlineJudge")[0];
+        })
+    }
+}
+
+export class BOJSession implements IJudgeSiteSession {
+    public sessionId: Cookie = new Cookie("OnlineJudge", "unknown")
+    public config: IBOJConfig = Config.getBOJConfigFromFile()
+
+    constructor() {
+        SessionInitilaizer.initializeBOJSession(this)
     }
 
-    public signin() {
-        Axios.post('https://acmicpc.net/signin', {
+    public signin(): Promise<any> {
+        return Axios.post('https://acmicpc.net/signin', {
+            "login_user_id": this.config.id,
+            "login_password": this.config.password
+        }, {
             headers: {
-                Cookie: `OnlineJudge=${this.sessionId}`,
+                Cookie: this.sessionId,
             }
         });
     }
 
-    public isSignedIn() {
-        return undefined === this.sessionId
-    }
+    public submit(problem: number, language: Language, source: string) {
+        this.signin().then(resp => {
+                Axios.post('https://acmicpc.net/sumbit', {
+                    'source': '123',
+                }, {
+                    headers: {
 
-    public submit(problem: Number) {
-        
+                    }
+                })
+            }
+        )
     }
 }
