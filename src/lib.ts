@@ -1,27 +1,24 @@
 import * as data from './data.json';
+import { window, TextEditor } from "vscode"
 
-interface IJSONModuleToMap
-{
-    [key: string]: string[];
+interface LanguageInfo {
+    language: string,
+    number: number,
 }
 
 function getLanguagesAndExtensions(): Map<string, Set<String>> {
-    const languageMap: IJSONModuleToMap = data;
+    const languages: Array<LanguageInfo> = Array.from(data.values());
+    console.log(languages)
     const newMap: Map<string, Set<String>> = new Map<string, Set<String>>();
-    for (let language in languageMap) {
-        newMap.set(language, new Set<string>(languageMap[language]));
-    }
+    // for (let language in languageMap) {
+    //     newMap.set(language, new Set<string>(languageMap[language]));
+    // }
     return newMap;
 }
 
-export function toLanguage(extension: string): string {
-    const languageAndExtensions = getLanguagesAndExtensions();
-    for (let [language, extensions] of languageAndExtensions.entries()) {
-        if (extensions.has(extension)) {
-            return language;
-        }
-    }
-    return "unknown"
+function getLanguage() {
+    const edtior = <TextEditor>window.activeTextEditor
+    window.showInformationMessage(edtior.document.languageId)
 }
 
 export function isNumber(value: string): boolean {
