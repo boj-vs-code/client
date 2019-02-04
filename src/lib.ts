@@ -6,29 +6,31 @@ interface LanguageInfo {
     number: number,
 }
 
-function getLanguagesAndExtensions(): Map<string, Set<String>> {
+function getLanguages(): Array<LanguageInfo> {
     const languages: Array<LanguageInfo> = Array.from(data.values());
-    console.log(languages)
-    const newMap: Map<string, Set<String>> = new Map<string, Set<String>>();
-    // for (let language in languageMap) {
-    //     newMap.set(language, new Set<string>(languageMap[language]));
-    // }
-    return newMap;
+    return languages;
 }
 
-function getLanguage() {
+export function showLanguage() {
     const edtior = <TextEditor>window.activeTextEditor
     window.showInformationMessage(edtior.document.languageId)
 }
 
-export function isNumber(value: string): boolean {
+function isNumber(value: string): boolean {
     return NaN !== Number(value)
 }
 
-export function hasProblemNumberAndOthers(value: string): boolean {
+function hasProblemNumberAndOthers(value: string): boolean {
     return value.indexOf('-') !== -1 && isNumber(value.split('-')[0])
 }
 
-export function getProblemNumber(value: string): string {
-    return value.split('-')[0];
+export function getProblemNumber(): number {
+    const edtior = <TextEditor>window.activeTextEditor
+    const fileName = edtior.document.fileName
+    
+    if(hasProblemNumberAndOthers(fileName)) {
+        return Number(fileName.split('-')[0])
+    } else {
+        return Number(fileName.split('.')[0])
+    }
 }
