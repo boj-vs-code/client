@@ -6,14 +6,20 @@ interface LanguageInfo {
     number: number,
 }
 
-function getLanguages(): Array<LanguageInfo> {
-    const languages: Array<LanguageInfo> = Array.from(data.values());
+export function getLanguages(): Array<LanguageInfo> {
+    const languages = data.map(x => x);
+    languages.sort((a, b) => a.number - b.number)
     return languages;
 }
 
-export function showLanguage() {
+export function getLanguage() {
     const edtior = <TextEditor>window.activeTextEditor
-    window.showInformationMessage(edtior.document.languageId)
+    return edtior.document.languageId
+}
+
+export function getSource() {
+    const edtior = <TextEditor>window.activeTextEditor
+    return edtior.document.getText()
 }
 
 function isNumber(value: string): boolean {
