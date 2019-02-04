@@ -2,6 +2,7 @@ import Axios from "axios";
 import { parse, HTMLElement, TextNode } from "node-html-parser";
 import * as fs from "fs";
 import * as qs from "querystring";
+import { LanguageInfo } from "../lib"
 
 class Account {
     constructor(public id: string, public pw: string) {}
@@ -93,14 +94,6 @@ export default class BOJ {
             return new Problem(title, description, inputDescription, outputDescription, testcases, metadata);
         });
     }
-
-    static initializeWithAccount() {
-
-    }
-
-    static initializeParser(session: BOJSession) {
-
-    }
 }
 
 interface IBOJConfig {
@@ -115,17 +108,11 @@ class Config {
     }
 }
 
-export class Language {
-    constructor(
-        public name: string,
-        public idx: number) {}
-}
-
 interface IJudgeSiteSession {
     sessionId: Cookie|undefined
 
     signin(): void;
-    submit(problem: number, language: Language, source: string): void;
+    submit(problem: number, language: LanguageInfo, source: string): void;
 }
 
 class SessionInitilaizer {
@@ -168,7 +155,7 @@ export class BOJSession implements IJudgeSiteSession {
         });
     }
 
-    public async submit(problem: number, language: Language, source: string) {
+    public async submit(problem: number, language: LanguageInfo, source: string) {
         await this.signin();
         const getCsrfKey = async () => {
             return await Axios({

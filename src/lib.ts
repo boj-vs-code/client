@@ -1,7 +1,7 @@
 import * as data from './data.json';
 import { window, TextEditor } from "vscode"
 
-interface LanguageInfo {
+export interface LanguageInfo {
     language: string,
     number: number,
 }
