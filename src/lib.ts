@@ -1,5 +1,5 @@
 import * as data from './data.json';
-import { window, TextEditor } from "vscode"
+import { window, TextEditor, workspace } from "vscode"
 
 export interface LanguageInfo {
     language: string,
@@ -10,6 +10,15 @@ export function getLanguages(): Array<LanguageInfo> {
     const languages = data.map(x => x);
     languages.sort((a, b) => a.number - b.number)
     return languages;
+}
+
+export function getWorkspacePath(): string|undefined {
+    const folders = workspace.workspaceFolders;
+    if (folders !== undefined) {
+        return folders[0].uri.path
+    } else {
+        return undefined 
+    }
 }
 
 export function getLanguage() {
