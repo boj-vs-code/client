@@ -41,7 +41,9 @@ function hasProblemNumberAndOthers(value: string): boolean {
 
 export function getProblemNumber(): number {
     const edtior = <TextEditor>window.activeTextEditor
-    const fileName = edtior.document.fileName
+    const filePath = edtior.document.fileName
+    const fileName = filePath.split('/').slice(-1)[0]
+    window.showInformationMessage(fileName)
     
     if(hasProblemNumberAndOthers(fileName)) {
         return Number(fileName.split('-')[0])
