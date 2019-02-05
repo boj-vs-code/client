@@ -2,7 +2,8 @@ import Axios from "axios";
 import { parse, HTMLElement, TextNode } from "node-html-parser";
 import * as fs from "fs";
 import * as qs from "querystring";
-import { LanguageInfo } from "../lib"
+import { LanguageInfo, getWorkspacePath } from "../lib"
+import * as vscode from "vscode";
 
 class Account {
     constructor(public id: string, public pw: string) {}
@@ -103,7 +104,8 @@ interface IBOJConfig {
 
 class Config {
     public static getBOJConfigFromFile(): IBOJConfig {
-        let configFileContent = fs.readFileSync('.bojconfig').toString();
+        const root = getWorkspacePath()
+        const configFileContent = fs.readFileSync(root+'.bojconfig').toString();
         return JSON.parse(configFileContent);
     }
 }
@@ -175,7 +177,7 @@ export class BOJSession implements IJudgeSiteSession {
         
         const data = qs.stringify({
             'source': source,
-            'language': language.idx,
+            'language': language.number,
             'problem_id': problem,
             'csrf_key': csrf_key,
             'code_open': 'open',
@@ -185,11 +187,15 @@ export class BOJSession implements IJudgeSiteSession {
             Cookie: this.sessionId.toString(),
         }
 
+        vscode.window.showInformationMessage("Start to submit");
+
         Axios({
             method: 'post',
             url: `https://www.acmicpc.net/submit/${problem}`,
             data: data,
             headers: headers
+        }).then(resp => {
+            vscode.window.showInformationMessage("End of submit");
         })
     }
 }
