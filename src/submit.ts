@@ -5,17 +5,26 @@ import { BOJSession } from "./api/boj";
 async function submitBOJ(session: BOJSession) {
   vscode.window.showInformationMessage("Let's submit code xD");
 
+  vscode.window.showInformationMessage("data0?");
+
   const languages = getLanguages();
+
+  vscode.window.showInformationMessage("data1?");
   const languageNames = languages.map(x => x.language);
-  const filtered = languageNames.filter(x => {
-    return (
+
+  vscode.window.showInformationMessage("data2?");
+  const regexp = new RegExp(`^${getLanguage()}(\\s|$|\\d)+`);
+  const filtered = languageNames.filter(
+    x =>
       x
         .replace(/\+/g, "p")
         .replace(/\#/g, "sharp")
+        .replace(/\./g, "")
         .toLowerCase()
-        .indexOf(getLanguage()) !== -1
-    );
-  });
+        .search(regexp) !== -1
+  );
+
+  vscode.window.showInformationMessage("data3?");
 
   let selectedLanguage: string | undefined;
   if (filtered.length === 1) {
@@ -25,6 +34,8 @@ async function submitBOJ(session: BOJSession) {
       0 === filtered.length ? languageNames : filtered
     );
   }
+  vscode.window.showInformationMessage("data3?");
+  //   vscode.window.showInformationMessage(<string>selectedLanguage);
 
   if (selectedLanguage === undefined) {
     vscode.window.showErrorMessage("You didn't select the Language");
