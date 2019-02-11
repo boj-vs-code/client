@@ -10,21 +10,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.runBojTestcase",
-		"onLanguage:python",
 		"workspaceContains:/.bojconfig"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"keybindings": [
 			{
-				"command": "extension.runBojTestcase",
-				"key": "ctrl+f1"
+				"command": "extension.submitBOJ",
+				"key": "ctrl+alt+s"
 			}
 		],
 		"commands": [
 			{
-				"command": "extension.runBojTestcase",
+				"command": "extension.submitBOJ",
 				"title": "Run BOJ Testcases"
 			}
 		]
