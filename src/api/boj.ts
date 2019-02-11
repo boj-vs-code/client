@@ -104,8 +104,8 @@ interface IBOJConfig {
 
 class Config {
     public static getBOJConfigFromFile(): IBOJConfig {
-        const root = getWorkspacePath()
-        const configFileContent = fs.readFileSync(root+'.bojconfig').toString();
+        const rootPath = getWorkspacePath()
+        const configFileContent = fs.readFileSync(`${rootPath}/.bojconfig`).toString();
         return JSON.parse(configFileContent);
     }
 }
@@ -144,7 +144,7 @@ export class BOJSession implements IJudgeSiteSession {
             login_user_id: this.config.id,
             login_password: this.config.password
         })
-        
+
         const headers = {
             Cookie: this.sessionId.toString()
         }
@@ -187,7 +187,7 @@ export class BOJSession implements IJudgeSiteSession {
             Cookie: this.sessionId.toString(),
         }
 
-        vscode.window.showInformationMessage("Start to submit");
+        vscode.window.showInformationMessage(`Start to submit! / Problem Number: ${problem} / Language: ${language.language}`);
 
         Axios({
             method: 'post',
@@ -195,7 +195,7 @@ export class BOJSession implements IJudgeSiteSession {
             data: data,
             headers: headers
         }).then(resp => {
-            vscode.window.showInformationMessage("End of submit");
+            vscode.window.showInformationMessage("End of submit!");
         })
     }
 }
