@@ -1,47 +1,55 @@
 {
-	"name": "boj-vs-code",
-	"displayName": "boj-vs-code",
-	"description": "",
-	"version": "0.0.1",
-	"engines": {
-		"vscode": "^1.30.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"workspaceContains:/.bojconfig"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"keybindings": [
-			{
-				"command": "extension.submitBOJ",
-				"key": "ctrl+alt+s"
-			}
-		],
-		"commands": [
-			{
-				"command": "extension.submitBOJ",
-				"title": "Run BOJ Testcases"
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "npm run compile && node ./node_modules/vscode/bin/test"
-	},
-	"devDependencies": {
-		"@types/mocha": "^2.2.42",
-		"@types/node": "^8.10.25",
-		"axios": "^0.18.0",
-		"dom-parser": "^0.1.5",
-		"node-html-parser": "^1.1.12",
-		"tslint": "^5.8.0",
-		"typescript": "^3.1.4",
-		"vscode": "^1.1.25"
-	}
+  "name": "boj-vs-code",
+  "displayName": "boj-vs-code",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.30.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:/.bojconfig"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "keybindings": [
+      {
+        "command": "extension.submitBOJ",
+        "key": "ctrl+alt+s"
+      },
+      {
+        "command": "extension.showProblemInformation",
+        "key": "ctrl+alt+i"
+      }
+    ],
+    "commands": [
+      {
+        "command": "extension.submitBOJ",
+        "title": "Run BOJ Testcases"
+      },
+      {
+        "command": "extension.showProblemInformation",
+        "title": "whwww"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^8.10.25",
+    "axios": "^0.18.0",
+    "dom-parser": "^0.1.5",
+    "node-html-parser": "^1.1.12",
+    "tslint": "^5.8.0",
+    "typescript": "^3.1.4",
+    "vscode": "^1.1.25"
+  }
 }

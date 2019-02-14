@@ -15,10 +15,20 @@ export function activate(context: vscode.ExtensionContext) {
   const session = new BOJSession();
   vscode.window.showInformationMessage("Activate!");
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
-  // let
+  function show() {
+    const panel = vscode.window.createWebviewPanel(
+      "catCoding",
+      "Cat Coding",
+      vscode.ViewColumn.One,
+      {}
+    );
+  }
+
+  let showProblemInformationSubscription = vscode.commands.registerCommand(
+    "extension.showProblemInformation",
+    show
+  );
+
   let submitSubscription = vscode.commands.registerCommand(
     "extension.submitBOJ",
     () => {
@@ -27,6 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(submitSubscription);
+  context.subscriptions.push(showProblemInformationSubscription);
 }
 
 // this method is called when your extension is deactivated
