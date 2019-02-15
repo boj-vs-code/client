@@ -2,7 +2,9 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import { submitBOJ } from "./submit";
-import { BOJSession } from "./api/boj";
+import BOJ, { BOJSession } from "./api/boj";
+import { getProblemNumber } from "./lib";
+import { showProblemWithWebview } from "./problemView";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -15,18 +17,12 @@ export function activate(context: vscode.ExtensionContext) {
   const session = new BOJSession();
   vscode.window.showInformationMessage("Activate!");
 
-  function show() {
-    const panel = vscode.window.createWebviewPanel(
-      "catCoding",
-      "Cat Coding",
-      vscode.ViewColumn.One,
-      {}
-    );
-  }
-
   let showProblemInformationSubscription = vscode.commands.registerCommand(
     "extension.showProblemInformation",
-    show
+    async () => {
+      const problem = await BOJ.getProblem(getProblemNumber());
+      showProblemWithWebview(problem);
+    }
   );
 
   let submitSubscription = vscode.commands.registerCommand(

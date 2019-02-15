@@ -9,6 +9,7 @@ export interface LanguageInfo {
 export function getLanguages(): Array<LanguageInfo> {
   const languages = data.map(x => x);
   languages.sort((a, b) => a.number - b.number);
+  window.showInformationMessage("Test");
   return languages;
 }
 

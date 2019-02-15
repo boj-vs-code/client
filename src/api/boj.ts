@@ -37,14 +37,14 @@ interface IProblemMetadata {
   answerPercent?: string | Number;
 }
 
-class Problem {
+export class Problem {
   constructor(
     public title: string,
     public description: string,
     public inputDescription: string,
     public outputDescription: string,
     public testcases: Array<TestCase>,
-    public metadata?: IProblemMetadata
+    public metadata: IProblemMetadata
   ) {}
 }
 
