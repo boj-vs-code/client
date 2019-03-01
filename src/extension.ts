@@ -4,7 +4,8 @@ import * as vscode from "vscode";
 import { submitBOJ } from "./submit";
 import BOJ, { BOJSession } from "./api/boj";
 import { getProblemNumber } from "./lib";
-import { showProblemWithWebview } from "./problemView";
+import { showProblemWithWebview } from "./views/problem";
+import { createDefaultView } from "./views/loading";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -14,6 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
   console.log(
     'Congratulations, your extension "boj-vs-code-ts" is now active!'
   );
+  createDefaultView();
   const session = new BOJSession();
   vscode.window.showInformationMessage("Activate!");
 

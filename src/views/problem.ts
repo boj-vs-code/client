@@ -1,7 +1,5 @@
 import * as vscode from "vscode";
-import { Problem } from "./api/boj";
-
-// vscode.commands.registerCommand
+import { Problem } from "../api/boj";
 
 export function showProblemWithWebview(problem: Problem) {
   const panel = vscode.window.createWebviewPanel(
@@ -10,6 +8,8 @@ export function showProblemWithWebview(problem: Problem) {
     vscode.ViewColumn.Seven,
     {}
   );
+
+  const editor = vscode.window.activeTextEditor;
 
   const testcases = problem.testcases.map(
     (value, index) =>
