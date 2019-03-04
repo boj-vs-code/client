@@ -1,4 +1,4 @@
+---
 linters:
-  tslint: {  }
-  shellcheck:
-    shell: bash
+  tslint:
+    config: tslint.json
