@@ -1,5 +1,7 @@
 # boj-vs-code README
 
+[![Build Status](https://travis-ci.org/moreal/boj-vs-code.svg?branch=master)](https://travis-ci.org/moreal/boj-vs-code)
+
 This tool will make you feel comfortable when you're solving BOJ :D
 
 ## Features
