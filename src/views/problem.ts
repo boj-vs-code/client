@@ -1,13 +1,29 @@
 import * as vscode from "vscode";
 import { Problem } from "../api/boj";
+import { extensionSession } from "../extension/session";
+
+const PROBLEM_VIEW = "problemView";
 
 export function showProblemWithWebview(problem: Problem) {
-  const panel = vscode.window.createWebviewPanel(
-    "bojProblemView",
-    problem.title,
-    vscode.ViewColumn.Seven,
-    {}
-  );
+  if (!extensionSession.has(PROBLEM_VIEW)) {
+    const panel = vscode.window.createWebviewPanel(
+      "bojProblemView",
+      problem.title,
+      vscode.ViewColumn.Seven,
+      {}
+    );
+
+    panel.onDidDispose(() => {
+      vscode.window.showErrorMessage("Disposed");
+
+      extensionSession.delete(PROBLEM_VIEW);
+    });
+
+    extensionSession.set(PROBLEM_VIEW, panel);
+  }
+
+  const panel = <vscode.WebviewPanel>extensionSession.get(PROBLEM_VIEW);
+  panel.title = problem.title;
 
   const editor = vscode.window.activeTextEditor;
 
