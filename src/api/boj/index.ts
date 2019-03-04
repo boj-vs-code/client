@@ -1,52 +1,16 @@
 import Axios from "axios";
-import { parse, HTMLElement, TextNode } from "node-html-parser";
-import * as fs from "fs";
+import { parse, HTMLElement } from "node-html-parser";
 import * as qs from "querystring";
-import { LanguageInfo, getWorkspacePath } from "../../lib";
+import { LanguageInfo } from "../../lib";
 import * as vscode from "vscode";
 
-class Account {
-  constructor(public id: string, public pw: string) {}
-}
-
-class TestCase {
-  constructor(public input: string, public output: string) {}
-}
-
-export class Cookie {
-  constructor(public name: string, public value: string) {}
-  toString = (): string => `${this.name}=${this.value};`;
-
-  public static async getBOJSessionCookie(): Promise<Cookie> {
-    return await Axios.get("https://www.acmicpc.net/").then(resp => {
-      let cookies: Array<Cookie> = resp.headers["set-cookie"]
-        .map((x: string) => x.split(";")[0].split("="))
-        .map((x: Array<string>) => new Cookie(x[0], x[1]));
-
-      return cookies.filter(x => x.name === "OnlineJudge")[0];
-    });
-  }
-}
-
-interface IProblemMetadata {
-  timeLimit?: string;
-  memoryLimit?: string;
-  submitCount?: string | Number;
-  successCount?: string | Number;
-  successPeopleCount?: string | Number;
-  answerPercent?: string | Number;
-}
-
-export class Problem {
-  constructor(
-    public title: string,
-    public description: string,
-    public inputDescription: string,
-    public outputDescription: string,
-    public testcases: Array<TestCase>,
-    public metadata: IProblemMetadata
-  ) {}
-}
+import { Problem } from "./problem";
+import { TestCase } from "./testcase";
+import { Cookie } from "./cookie";
+import { IJudgeSiteSession } from "./interfaces/judge-site-session";
+import { Config } from "./config";
+import { IBOJConfig } from "./interfaces/boj-config";
+import { SessionInitilaizer } from "./session";
 
 export default class BOJ {
   static session: BOJSession;
@@ -116,40 +80,6 @@ export default class BOJ {
   }
 }
 
-interface IBOJConfig {
-  id: string;
-  password: string;
-}
-
-class Config {
-  public static getBOJConfigFromFile(): IBOJConfig {
-    const rootPath = getWorkspacePath();
-    const configFileContent = fs
-      .readFileSync(`${rootPath}/.bojconfig`)
-      .toString();
-    return JSON.parse(configFileContent);
-  }
-}
-
-interface IJudgeSiteSession {
-  sessionId: Cookie | undefined;
-
-  signin(): void;
-  submit(problem: number, language: LanguageInfo, source: string): void;
-}
-
-class SessionInitilaizer {
-  public static async initializeBOJSession(session: BOJSession) {
-    Axios.get("https://www.acmicpc.net/").then(resp => {
-      let cookies: Array<Cookie> = resp.headers["set-cookie"]
-        .map((x: string) => x.split(";")[0].split("="))
-        .map((x: Array<string>) => new Cookie(x[0], x[1]));
-
-      session.sessionId = cookies.filter(x => x.name === "OnlineJudge")[0];
-    });
-  }
-}
-
 export class BOJSession implements IJudgeSiteSession {
   public sessionId: Cookie = new Cookie("OnlineJudge", "unknown");
   public config: IBOJConfig = Config.getBOJConfigFromFile();
@@ -158,7 +88,7 @@ export class BOJSession implements IJudgeSiteSession {
     SessionInitilaizer.initializeBOJSession(this);
   }
 
-  public signin(): Promise<any> {
+  public async signin() {
     while (this.sessionId.value === "unknown") {}
 
     const data = qs.stringify({
@@ -170,7 +100,7 @@ export class BOJSession implements IJudgeSiteSession {
       Cookie: this.sessionId.toString()
     };
 
-    return Axios({
+    await Axios({
       method: "post",
       url: "https://www.acmicpc.net/signin",
       data: data,
