@@ -2,7 +2,7 @@ import Axios from "axios";
 import { parse, HTMLElement, TextNode } from "node-html-parser";
 import * as fs from "fs";
 import * as qs from "querystring";
-import { LanguageInfo, getWorkspacePath } from "../lib";
+import { LanguageInfo, getWorkspacePath } from "../../lib";
 import * as vscode from "vscode";
 
 class Account {
@@ -51,73 +51,67 @@ export class Problem {
 export default class BOJ {
   static session: BOJSession;
   static async getProblem(problemNumber: Number): Promise<Problem> {
-    return await Axios.get(`https://acmicpc.net/problem/${problemNumber}`).then(
-      resp => {
-        const options = {
-          lowerCaseTagName: false, // convert tag name to lower case (hurt performance heavily)
-          script: false, // retrieve content in <script> (hurt performance slightly)
-          style: false, // retrieve content in <style> (hurt performance slightly)
-          pre: true // retrieve content in <pre> (hurt performance slightly)
-        };
+    const resp = await Axios.get(
+      `https://acmicpc.net/problem/${problemNumber}`
+    );
 
-        const root: HTMLElement = <HTMLElement>parse(resp.data, options);
-        const problemInfoElements = root.querySelector("#problem-info")
-          .childNodes[3].childNodes[1].childNodes;
+    const options = {
+      lowerCaseTagName: false,
+      script: false,
+      style: false,
+      pre: true
+    };
 
-        const testcases: Array<TestCase> = new Array<TestCase>();
+    const root: HTMLElement = <HTMLElement>parse(resp.data, options);
+    const problemInfoElements = root.querySelector("#problem-info")
+      .childNodes[3].childNodes[1].childNodes;
 
-        // get testcase
-        for (let i = 1; i <= 10; ++i) {
-          const inputElement = root.querySelector(`#sample-input-${i}`);
-          const outputElement = root.querySelector(`#sample-output-${i}`);
-          if (inputElement === null || outputElement === null) {
-            break;
-          }
+    const testcases: Array<TestCase> = new Array<TestCase>();
 
-          const input = inputElement.text.trim().replace(/\r\n/g, "\n");
-          const output = outputElement.text.trim().replace(/\r\n/g, "\n");
-
-          testcases.push(new TestCase(input, output));
-        }
-
-        const title = root.querySelector("#problem_title").text.trim();
-        const description = root
-          .querySelector("#problem_description")
-          .text.trim();
-        const inputDescription = root
-          .querySelector("#problem_input")
-          .text.trim();
-        const outputDescription = root
-          .querySelector("#problem_output")
-          .text.trim();
-        const [
-          timeLimit,
-          memoryLimit,
-          submitCount,
-          successCount,
-          successPeopleCount,
-          answerPercent
-        ] = problemInfoElements
-          .map(x => x.rawText)
-          .filter(x => x.indexOf("\t") === -1);
-        const metadata = {
-          timeLimit,
-          memoryLimit,
-          submitCount,
-          successCount,
-          successPeopleCount,
-          answerPercent
-        };
-
-        return new Problem(
-          title,
-          description,
-          inputDescription,
-          outputDescription,
-          testcases,
-          metadata
-        );
+    for (let i = 1; i <= 10; ++i) {
+      const inputElement = root.querySelector(`#sample-input-${i}`);
+      const outputElement = root.querySelector(`#sample-output-${i}`);
+      if (inputElement === null || outputElement === null) {
+        break;
       }
+
+      const input = inputElement.text.trim().replace(/\r\n/g, "\n");
+      const output = outputElement.text.trim().replace(/\r\n/g, "\n");
+
+      testcases.push(new TestCase(input, output));
+    }
+
+    const title = root.querySelector("#problem_title").text.trim();
+    const description = root.querySelector("#problem_description").text.trim();
+    const inputDescription = root.querySelector("#problem_input").text.trim();
+    const outputDescription = root.querySelector("#problem_output").text.trim();
+    const [
+      timeLimit,
+      memoryLimit,
+      submitCount,
+      successCount,
+      successPeopleCount,
+      answerPercent
+    ] = problemInfoElements
+      .map(x => x.rawText)
+      .filter(x => x.indexOf("\t") === -1);
+
+    const metadata = {
+      timeLimit,
+      memoryLimit,
+      submitCount,
+      successCount,
+      successPeopleCount,
+      answerPercent
+    };
+
+    return new Problem(
+      title,
+      description,
+      inputDescription,
+      outputDescription,
+      testcases,
+      metadata
     );
   }
 }
@@ -184,25 +178,27 @@ export class BOJSession implements IJudgeSiteSession {
     });
   }
 
+  private async getCsrfKey(problem: number): Promise<string> {
+    const resp = await Axios({
+      method: "get",
+      url: `https://www.acmicpc.net/submit/${problem}`,
+      headers: {
+        Cookie: this.sessionId.toString()
+      }
+    });
+
+    const root: HTMLElement = <HTMLElement>parse(resp.data);
+    const csrfKeyElement = <HTMLElement>(
+      root.querySelector("#submit_form").childNodes[5]
+    );
+
+    return csrfKeyElement.rawAttributes.value;
+  }
+
   public async submit(problem: number, language: LanguageInfo, source: string) {
     await this.signin();
-    const getCsrfKey = async () => {
-      return await Axios({
-        method: "get",
-        url: `https://www.acmicpc.net/submit/${problem}`,
-        headers: {
-          Cookie: this.sessionId.toString()
-        }
-      }).then(resp => {
-        const root: HTMLElement = <HTMLElement>parse(resp.data);
-        const csrfKeyElement = <HTMLElement>(
-          root.querySelector("#submit_form").childNodes[5]
-        );
-        return csrfKeyElement.rawAttributes.value;
-      });
-    };
 
-    const csrf_key = await getCsrfKey();
+    const csrf_key = await this.getCsrfKey(problem);
 
     const data = qs.stringify({
       source: source,
