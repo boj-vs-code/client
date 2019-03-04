@@ -1,6 +1,9 @@
-# boj-vs-code README
+# boj vs code
 
 [![Build Status](https://travis-ci.org/moreal/boj-vs-code.svg?branch=master)](https://travis-ci.org/moreal/boj-vs-code)
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)  
+![](https://vsmarketplacebadge.apphb.com/version/bojvscode.boj-vs-code.svg)  
+[![TypeScript](https://badges.frapsoft.com/typescript/awesome/typescript.png?v=101)](https://github.com/ellerbrock/typescript-badges/)
 
 This tool will make you feel comfortable when you're solving BOJ :D
 
@@ -18,16 +21,7 @@ This tool will make you feel comfortable when you're solving BOJ :D
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `boj.enable`: enable/disable this extension  
-* `boj.use_cache`: enable/disable to use cache
-* `boj.account.id`: your boj id
-* `boj.account.pw`: your boj pw
+todo
 
 ## Known Issues
 
