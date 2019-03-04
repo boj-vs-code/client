@@ -1,9 +1,9 @@
 import * as vscode from "vscode";
-import { extensionSession } from "../extension/session";
+import { extensionSession } from "../session";
 
-export function createDefaultView(): vscode.WebviewPanel {
+export function showLandingView(): void {
   const panel = vscode.window.createWebviewPanel(
-    "whatType",
+    "boj-vs-code-view",
     "BOJ-vs-code",
     vscode.ViewColumn.Active
   );
@@ -11,6 +11,4 @@ export function createDefaultView(): vscode.WebviewPanel {
   panel.onDidDispose(() => {
     extensionSession.delete("informationView");
   });
-
-  return panel;
 }

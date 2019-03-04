@@ -1,10 +1,10 @@
 import * as vscode from "vscode";
-import { createDefaultView } from "./views/loading";
+import { showLandingView } from "./views/loading";
 import { submitSubscription } from "./subscriptions/submit";
 import { showProblemInformationSubscription } from "./subscriptions/problem";
 
 export function activate(context: vscode.ExtensionContext) {
-  createDefaultView();
+  showLandingView();
 
   context.subscriptions.push(submitSubscription);
   context.subscriptions.push(showProblemInformationSubscription);
