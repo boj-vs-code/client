@@ -33,7 +33,7 @@ suite("BOJ API Tests", function() {
         timeLimit: "2 초"
       }
     );
-    const parsedProblem = BOJ.getProblem(1000);
+    const parsedProblem = await BOJ.getProblem(1000);
 
     assert.equal(parsedProblem, problem1000);
   });
