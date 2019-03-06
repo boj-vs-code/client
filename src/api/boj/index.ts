@@ -11,6 +11,7 @@ import { IJudgeSiteSession } from "./interfaces/judge-site-session";
 import { Config } from "./config";
 import { IBOJConfig } from "./interfaces/boj-config";
 import { SessionInitilaizer } from "./session";
+import { IBOJScoringStatus } from "./interfaces/boj-scoring-status";
 
 export default class BOJ {
   static session: BOJSession;
@@ -175,7 +176,9 @@ export class BOJSession implements IJudgeSiteSession {
     return matches || [];
   }
 
-  public async solved(solution_id: number): Promise<JSON> {
+  public async solved(
+    solution_id: number | string
+  ): Promise<IBOJScoringStatus> {
     const data = qs.stringify({
       solution_id
     });
