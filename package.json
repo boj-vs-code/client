@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "publisher": "bojvscode",
   "repository": "https://github.com/moreal/boj-vs-code",
+  "icon": "resources/images/logo-white.png",
   "engines": {
     "vscode": "^1.30.0"
   },
