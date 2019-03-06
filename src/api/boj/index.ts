@@ -39,16 +39,26 @@ export default class BOJ {
         break;
       }
 
-      const input = inputElement.text.trim().replace(/\r\n/g, "\n");
-      const output = outputElement.text.trim().replace(/\r\n/g, "\n");
+      const input = `<pre>${inputElement.innerHTML
+        .trim()
+        .replace(/\r\n/g, "\n")}</pre>`;
+      const output = `<pre>${outputElement.innerHTML
+        .trim()
+        .replace(/\r\n/g, "\n")}</pre>`;
 
       testcases.push(new TestCase(input, output));
     }
 
-    const title = root.querySelector("#problem_title").text.trim();
-    const description = root.querySelector("#problem_description").text.trim();
-    const inputDescription = root.querySelector("#problem_input").text.trim();
-    const outputDescription = root.querySelector("#problem_output").text.trim();
+    const title = root.querySelector("#problem_title").innerHTML.trim();
+    const description = root
+      .querySelector("#problem_description")
+      .innerHTML.trim();
+    const inputDescription = root
+      .querySelector("#problem_input")
+      .innerHTML.trim();
+    const outputDescription = root
+      .querySelector("#problem_output")
+      .innerHTML.trim();
     const [
       timeLimit,
       memoryLimit,
@@ -125,7 +135,11 @@ export class BOJSession implements IJudgeSiteSession {
     return csrfKeyElement.rawAttributes.value;
   }
 
-  public async submit(problem: number, language: LanguageInfo, source: string) {
+  public async submit(
+    problem: number,
+    language: LanguageInfo,
+    source: string
+  ): Promise<Array<string>> {
     await this.signin();
 
     const csrf_key = await this.getCsrfKey(problem);
@@ -148,13 +162,35 @@ export class BOJSession implements IJudgeSiteSession {
       }`
     );
 
-    Axios({
+    const resp = await Axios({
       method: "post",
       url: `https://www.acmicpc.net/submit/${problem}`,
       data: data,
       headers: headers
-    }).then(resp => {
-      vscode.window.showInformationMessage("End of submit!");
     });
+
+    const content: string = resp.data;
+    const matches = content.match(/(?<=watch_solution\()\d+/g);
+
+    return matches || [];
+  }
+
+  public async solved(solution_id: number): Promise<JSON> {
+    const data = qs.stringify({
+      solution_id
+    });
+
+    const headers = {
+      "X-Requested-With": "XMLHttpRequest"
+    };
+
+    const resp = await Axios({
+      method: "post",
+      url: `https://www.acmicpc.net/status/ajax`,
+      data: data,
+      headers: headers
+    });
+
+    return resp.data;
   }
 }
