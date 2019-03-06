@@ -6,8 +6,7 @@
 // The module 'assert' provides assertion methods from node
 import * as assert from "assert";
 import BOJ from "../api/boj";
-import { Problem } from "../api/boj/problem";
-import { TestCase } from "../api/boj/testcase";
+import * as vscode from "vscode";
 
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
@@ -19,7 +18,11 @@ suite("BOJ API Tests", function() {
   // Defines a Mocha unit test
   test("BOJ#getProblem (1000)", async () => {
     const { title } = await BOJ.getProblem(1000);
-
     assert.equal(title, "A+B");
+  });
+
+  test("BOJ#getProblem (1001)", async () => {
+    const { title } = await BOJ.getProblem(1001);
+    assert.equal(title, "A-B");
   });
 });
