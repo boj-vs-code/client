@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { showLandingView } from "./views/loading";
+import { showLandingView } from "./views/landing";
 import { submitSubscription } from "./subscriptions/submit";
 import { showProblemInformationSubscription } from "./subscriptions/problem";
 
