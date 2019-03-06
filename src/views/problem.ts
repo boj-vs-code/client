@@ -7,7 +7,7 @@ const PROBLEM_VIEW = "problemView";
 function createAndStoreProblemViewIfNotExists() {
   if (!extensionSession.has(PROBLEM_VIEW)) {
     const panel = vscode.window.createWebviewPanel(
-      "bojProblemView",
+      "boj-vs-code-view",
       "",
       vscode.ViewColumn.Seven,
       {}
@@ -29,11 +29,13 @@ export function showProblemWithWebview(problem: Problem) {
 
   const editor = vscode.window.activeTextEditor;
 
-  const testcases = problem.testcases.map(
-    (value, index) =>
-      `<h3>입력 ${index}</h3>${value.input}
-       <h3>출력 ${index}</h3>${value.output}`
-  );
+  const testcases = problem.testcases
+    .map(
+      (value, index) =>
+        `<h3>입력 ${index}</h3>${value.input}
+      <h3>출력 ${index}</h3>${value.output}`
+    )
+    .reduce((a, b) => a + b);
 
   panel.webview.html = `
       <!DOCTYPE html>

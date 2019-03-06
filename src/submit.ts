@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
 import { getLanguages, getLanguage, getSource, getProblemNumber } from "./lib";
-import { BOJSession } from "./api/boj";
+import { bojSession } from "./session";
 
-async function submitBOJ(session: BOJSession) {
+async function submitBOJ() {
   vscode.window.showInformationMessage("Let's submit code xD");
 
   const languages = getLanguages();
@@ -36,7 +36,7 @@ async function submitBOJ(session: BOJSession) {
   const problemNumber = getProblemNumber();
   const source = getSource();
 
-  await session.submit(problemNumber, language, source);
+  await bojSession.submit(problemNumber, language, source);
 }
 
 export { submitBOJ };
