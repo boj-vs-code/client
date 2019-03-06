@@ -8,6 +8,10 @@ export function showLandingView(): void {
     vscode.ViewColumn.Active
   );
 
+  panel.webview.html = `
+    <h1>Hello!!! welcome to boj-vs-code!!</h1>
+  `;
+
   panel.onDidDispose(() => {
     extensionSession.delete("informationView");
   });
