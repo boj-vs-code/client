@@ -42,7 +42,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "test": "npm run compile && cd out && mocha --ui tdd"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
@@ -53,5 +53,9 @@
     "tslint": "^5.8.0",
     "typescript": "^3.1.4",
     "vscode": "^1.1.25"
+  },
+  "dependencies": {
+    "@types/pusher-js": "^4.2.0",
+    "pusher-js": "^4.4.0"
   }
 }
