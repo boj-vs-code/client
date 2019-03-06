@@ -18,15 +18,22 @@ import { TestCase } from "../api/boj/testcase";
 suite("BOJ API Tests", function() {
   // Defines a Mocha unit test
   test("Get problem 1000", async () => {
-    const parsedProblem = await BOJ.getProblem(1000);
     const problem1000 = new Problem(
       "A+B",
       "두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.",
       "첫째 줄에 A와 B가 주어진다. (0 < A, B < 10)",
       "첫째 줄에 A+B를 출력한다.",
       [new TestCase("1 2", "3")],
-      {}
+      {
+        answerPercent: "45.824%",
+        memoryLimit: "128 MB",
+        submitCount: "173806",
+        successCount: "76937",
+        successPeopleCount: "57167",
+        timeLimit: "2 초"
+      }
     );
+    const parsedProblem = BOJ.getProblem(1000);
 
     assert.equal(parsedProblem, problem1000);
   });
