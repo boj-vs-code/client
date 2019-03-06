@@ -37,15 +37,13 @@ async function submitBOJ() {
   const problemNumber = getProblemNumber();
   const source = getSource();
 
-  const solutionIds = await bojSession.submit(problemNumber, language, source);
+  const solutionId = await bojSession.submit(problemNumber, language, source);
 
-  solutionIds.forEach(solutionId => {
-    setTimeout(() => {
-      bojSession.solved(solutionId).then(data => {
-        vscode.window.showInformationMessage(data.result_name);
-      });
-    }, 1000);
-  });
+  setTimeout(() => {
+    bojSession.solved(solutionId).then(data => {
+      vscode.window.showInformationMessage(data.result_name);
+    });
+  }, 1000);
 }
 
 export { submitBOJ };
