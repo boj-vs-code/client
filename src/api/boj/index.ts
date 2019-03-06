@@ -140,7 +140,7 @@ export class BOJSession implements IJudgeSiteSession {
     problem: number,
     language: LanguageInfo,
     source: string
-  ): Promise<Array<string>> {
+  ): Promise<string> {
     await this.signin();
 
     const csrf_key = await this.getCsrfKey(problem);
@@ -173,7 +173,11 @@ export class BOJSession implements IJudgeSiteSession {
     const content: string = resp.data;
     const matches = content.match(/(?<=watch_solution\()\d+/g);
 
-    return matches || [];
+    if (matches !== null) {
+      return matches[0];
+    } else {
+      return ""; // TODO: throw custom Error, not default value
+    }
   }
 
   public async solved(
