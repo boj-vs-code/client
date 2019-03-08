@@ -1,14 +1,12 @@
 import * as vscode from "vscode";
 import { extensionSession } from "../session";
 import { Problem } from "../api/boj/problem";
-import { createAndStoreViewIfNotExists } from ".";
+import { createAndStoreViewIfNotExists, ViewManager } from ".";
 
 const PROBLEM_VIEW = "problemView";
 
 export function showProblemWithWebview(problem: Problem) {
-  createAndStoreViewIfNotExists();
-
-  const panel = <vscode.WebviewPanel>extensionSession.get(PROBLEM_VIEW);
+  const panel = ViewManager.main;
   panel.title = problem.title;
 
   const testcases = problem.testcases
