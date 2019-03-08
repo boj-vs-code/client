@@ -17,6 +17,23 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "boj-submit-tasks-explorer",
+          "title": "BOJ submit tasks",
+          "icon": "resources/images/logo-white.png"
+        }
+      ]
+    },
+    "views": {
+			"boj-submit-tasks-explorer": [
+				{
+					"id": "bojSubmitTasksExplorer",
+					"name": "BOJ submit tasks explorer"
+				}
+      ]
+    },
     "keybindings": [
       {
         "command": "extension.submitBOJ",
