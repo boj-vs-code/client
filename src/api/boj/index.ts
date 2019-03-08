@@ -1,16 +1,17 @@
 import Axios from "axios";
-import { parse, HTMLElement } from "node-html-parser";
 import * as qs from "querystring";
-import { LanguageInfo } from "../../lib";
 import * as vscode from "vscode";
+import { parse, HTMLElement } from "node-html-parser";
 
+import { LanguageInfo } from "../../lib";
+
+import { SessionInitilaizer } from "./session";
 import { Problem } from "./problem";
 import { TestCase } from "./testcase";
 import { Cookie } from "./cookie";
-import { IJudgeSiteSession } from "./interfaces/judge-site-session";
 import { Config } from "./config";
 import { IBOJConfig } from "./interfaces/boj-config";
-import { SessionInitilaizer } from "./session";
+import { IJudgeSiteSession } from "./interfaces/judge-site-session";
 import { IBOJScoringStatus } from "./interfaces/boj-scoring-status";
 
 export default class BOJ {
@@ -158,7 +159,7 @@ export class BOJSession implements IJudgeSiteSession {
     };
 
     vscode.window.showInformationMessage(
-      `Start to submit! / Problem Number: ${problem} / Language: ${
+      `Submit을 시작합니다! / 문제번호: ${problem} / 선택한 언어: ${
         language.language
       }`
     );
@@ -180,9 +181,7 @@ export class BOJSession implements IJudgeSiteSession {
     }
   }
 
-  public async solved(
-    solution_id: number | string
-  ): Promise<IBOJScoringStatus> {
+  public async solved(solution_id: string): Promise<IBOJScoringStatus> {
     const data = qs.stringify({
       solution_id
     });
