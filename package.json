@@ -42,16 +42,24 @@
       {
         "command": "extension.showProblemInformation",
         "key": "ctrl+alt+i"
+      },
+      {
+        "command": "extension.showSubmitTasks",
+        "key": "ctrl+alt+v"
       }
     ],
     "commands": [
       {
         "command": "extension.submitBOJ",
-        "title": "Run BOJ Testcases"
+        "title": "Submit Source to BOJ"
       },
       {
         "command": "extension.showProblemInformation",
-        "title": "whwww"
+        "title": "Show Problem Information"
+      },
+      {
+        "command": "extension.showSubmitTasks",
+        "title": "Show Submit Tasks"
       }
     ]
   },
