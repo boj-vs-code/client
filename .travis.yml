@@ -12,6 +12,7 @@ before_install:
 
 install:
 - npm install
+- npm run prepublish
 
 script:
 - npm run test
