@@ -18,3 +18,10 @@ script:
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+
+notification:
+  email:
+    recipients:
+      - dev.moreal@gmail.com
+    on_success: changed
+    on_failure: changed
