@@ -1,6 +1,6 @@
 import * as Pusher from "pusher-js";
 import { SubmitTaskManager } from "./api/boj/submit-task";
-import { renderSubmitTasks } from "./views/tasks";
+import { SubmitTasksView } from "./views/tasks";
 
 const pusher = new Pusher("a2cb611847131e062b32", {
   cluster: "ap1",
@@ -14,6 +14,6 @@ export function registerProblemSubscribers(solution_id: string) {
     if (data.progress === undefined) {
       pusher.unsubscribe(`solution-${solution_id}`);
     }
-    renderSubmitTasks();
+    SubmitTasksView.render();
   });
 }
