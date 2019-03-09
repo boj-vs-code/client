@@ -1,57 +1,28 @@
+import { Webview } from "vscode";
+
 import { ViewManager } from ".";
-import { Problem } from "../api/boj/problem";
-import { stat } from "fs";
-
-type Handler<T> = (changed: T) => void;
-
-class ObservableArray<T> extends Array<T> {
-  private handlers: Array<Handler<T>> = new Array<Handler<T>>();
-
-  push(...items: T[]): number {
-    const returnValue = super.push(...items);
-    items.forEach(item => {
-      this.handlers.forEach(fn => fn(item));
-    });
-    return returnValue;
-  }
-
-  registerHandler(fn: (changed: T) => void) {
-    this.handlers.push(fn);
-  }
-}
-
-class SubmitTask {
-  constructor(
-    public problem: Problem,
-    public status: string,
-    public solution_id: string
-  ) {}
-}
-
-class SubmitTasksManager {
-  public static singleton = new SubmitTasksManager();
-
-  public submitTasks = new ObservableArray<SubmitTask>();
-
-  appendTasks(problem: Problem, status: string, solution_id: string): void {
-    this.submitTasks.unshift(new SubmitTask(problem, status, solution_id));
-  }
-}
+import { SubmitTaskManager } from "../api/boj/submit-task";
 
 export function showSubmitTasksView() {
   const panel = ViewManager.main;
 
-  const tasks = SubmitTasksManager.singleton.submitTasks.map(
-    ({ problem, status, solution_id }) => `
+  panel.title = "Submit Tasks";
+
+  renderSubmitTasks(panel.webview);
+}
+
+function renderSubmitTasks(webview: Webview) {
+  const tasks = SubmitTaskManager.tasks.map(
+    ([solution_id, { problem, status }]) => `
       <div>
         <h3>${problem.title}</h3>
         solution_id: ${solution_id}<br/>
-        status: ${status}
+        status: ${status ? status.result : "준비 중"}
       </div>
     `
   );
 
-  panel.webview.html = `
+  webview.html = `
     <h1>Submit Tasks</h1>  
     ${tasks.reduce((prev, current) => prev + current, "")}
   `;

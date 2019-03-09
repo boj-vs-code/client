@@ -2,6 +2,8 @@ import * as vscode from "vscode";
 import { getLanguages, getLanguage, getSource, getProblemNumber } from "./lib";
 import { bojSession } from "./session";
 import { ScoringStatusColor } from "./api/boj/enums/scoring-status-color";
+import { registerProblemSubscribers } from "./pusher";
+import { showSubmitTasksView } from "./views/tasks";
 
 async function submitBOJ() {
   vscode.window.showInformationMessage("Let's submit code xD");
@@ -38,12 +40,8 @@ async function submitBOJ() {
   const source = getSource();
 
   const solutionId = await bojSession.submit(problemNumber, language, source);
-
-  setTimeout(() => {
-    bojSession.solved(solutionId).then(data => {
-      vscode.window.showInformationMessage(data.result_name);
-    });
-  }, 1000);
+  registerProblemSubscribers(solutionId);
+  showSubmitTasksView();
 }
 
 export { submitBOJ };
