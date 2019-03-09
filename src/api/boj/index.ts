@@ -94,9 +94,10 @@ export default class BOJ {
 
 export class BOJSession implements IJudgeSiteSession {
   public sessionId: Cookie = new Cookie("OnlineJudge", "unknown");
-  public config: IBOJConfig = Config.getBOJConfigFromFile();
+  public config: IBOJConfig;
 
-  constructor() {
+  constructor(configFilename: string = ".bojconfig") {
+    this.config = Config.getBOJConfigFromFile(configFilename);
     SessionInitilaizer.initializeBOJSession(this);
   }
 
