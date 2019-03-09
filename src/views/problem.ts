@@ -1,19 +1,26 @@
 import { Problem } from "../api/boj/problem";
 import { ViewManager } from ".";
 
-export function showProblemWithWebview(problem: Problem) {
-  const panel = ViewManager.main;
-  panel.title = problem.title;
+const ProblemView = {
+  show(problem: Problem) {
+    const panel = ViewManager.main;
+    panel.title = problem.title;
 
-  const testcases = problem.testcases
-    .map(
-      (value, index) =>
-        `<h3>입력 ${index}</h3>${value.input}
+    this.render(problem);
+  },
+
+  render(problem: Problem) {
+    const panel = ViewManager.main;
+
+    const testcases = problem.testcases
+      .map(
+        (value, index) =>
+          `<h3>입력 ${index}</h3>${value.input}
       <h3>출력 ${index}</h3>${value.output}`
-    )
-    .reduce((a, b) => a + b);
+      )
+      .reduce((a, b) => a + b);
 
-  panel.webview.html = `
+    panel.webview.html = `
     <h1>${problem.title}</h1>
     <h2>문제</h2>
     ${problem.description}
@@ -23,5 +30,8 @@ export function showProblemWithWebview(problem: Problem) {
     ${problem.outputDescription}
     <h2>테스트 케이스</h2>
     ${testcases}
-    `;
-}
+  `;
+  }
+};
+
+export { ProblemView };

@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 
 const BOJ_VIEW = "bojView";
 
-export function createAndStoreViewIfNotExists() {
+function createAndStoreViewIfNotExists() {
   if (!extensionSession.has(BOJ_VIEW)) {
     const panel = vscode.window.createWebviewPanel(
       "boj-vs-code-view",
