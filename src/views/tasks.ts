@@ -14,11 +14,11 @@ const SubmitTasksView = {
     const panel = ViewManager.main;
 
     const tasks = SubmitTaskManager.tasks.map(
-      ([solution_id, { problem, status }]) => `
+      ([solution_id, { problemNumber, scoringStatus }]) => `
       <div>
-        <h3>${problem.title}</h3>
+        <h3>${problemNumber}</h3>
         solution_id: ${solution_id}<br/>
-        status: ${status ? status.result : "준비 중"}
+        status: ${scoringStatus ? scoringStatus.result_name : "준비 중"}
       </div>
     `
     );

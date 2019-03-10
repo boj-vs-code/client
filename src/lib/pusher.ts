@@ -1,20 +1,13 @@
-import * as Pusher from "pusher-js";
-
 import { SubmitTaskManager } from "../api/boj/submit-task";
-import { SubmitTasksView } from "../views/tasks";
-
-const pusher = new Pusher("a2cb611847131e062b32", {
-  cluster: "ap1",
-  encrypted: !0
-});
+import { bojSession } from "../session";
+import { log } from "util";
 
 export function registerProblemSubscribers(solution_id: string) {
-  const subcribe = pusher.subscribe(`solution-${solution_id}`);
-  subcribe.bind("update", data => {
-    SubmitTaskManager.updateTask(solution_id, data);
-    if (data.progress === undefined) {
-      pusher.unsubscribe(`solution-${solution_id}`);
+  const interval = setInterval(async () => {
+    const scoringStatus = await bojSession.solved(solution_id);
+    if (Number(scoringStatus.result) >= 4) {
+      clearInterval(interval);
     }
-    SubmitTasksView.render();
-  });
+    SubmitTaskManager.updateTask(solution_id, scoringStatus);
+  }, 100);
 }

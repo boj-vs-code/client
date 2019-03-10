@@ -9,8 +9,9 @@ import {
 } from ".";
 
 import { bojSession } from "../session";
-import { registerProblemSubscribers } from "./pusher";
 import { SubmitTasksView } from "../views/tasks";
+import { SubmitTaskManager } from "../api/boj/submit-task";
+import { registerProblemSubscribers } from "./pusher";
 
 async function showAndPickLanguageName(): Promise<string | undefined> {
   const languages = getLanguages();
@@ -51,6 +52,7 @@ export async function submitBOJ() {
   const source = getSource();
 
   const solutionId = await bojSession.submit(problemNumber, language, source);
+  SubmitTaskManager.createTask(solutionId, problemNumber);
   registerProblemSubscribers(solutionId);
   SubmitTasksView.show();
 }

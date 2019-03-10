@@ -1,30 +1,28 @@
-import { Problem } from "./problem";
-
-interface SubmitTaskStatus {
-  progress?: number;
-  memory?: number;
-  time?: number;
-  result: number;
-}
+import { SubmitTasksView } from "../../views/tasks";
+import { IBOJScoringStatus } from "./interfaces/boj-scoring-status";
 
 class SubmitTask {
-  constructor(public problem: Problem, public status?: SubmitTaskStatus) {}
+  constructor(
+    public problemNumber: number,
+    public scoringStatus?: IBOJScoringStatus
+  ) {}
 }
 
 class SubmitTaskManager {
   private static submitTasks = new Map<string, SubmitTask>();
 
-  static createTask(solutionId: string, problem: Problem) {
-    this.submitTasks.set(solutionId, new SubmitTask(problem));
+  static createTask(solutionId: string, problemNumber: number) {
+    this.submitTasks.set(solutionId, new SubmitTask(problemNumber));
   }
 
   static updateTask(
     solutionId: string,
-    submitTaskStatus: SubmitTaskStatus
+    scoringStatus: IBOJScoringStatus
   ): void {
     const task = this.submitTasks.get(solutionId);
     if (task !== undefined) {
-      task.status = submitTaskStatus;
+      task.scoringStatus = scoringStatus;
+      SubmitTasksView.render();
     }
   }
 

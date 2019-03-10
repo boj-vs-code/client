@@ -109,7 +109,6 @@ export class BOJSession implements IJudgeSiteSession {
 
   public async signin() {
     await this.initialize();
-    while (this.sessionId.value === "unknown") {}
 
     const data = qs.stringify({
       login_user_id: this.config.id,
