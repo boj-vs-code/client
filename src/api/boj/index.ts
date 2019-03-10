@@ -109,6 +109,7 @@ export class BOJSession implements IJudgeSiteSession {
 
   public async signin() {
     await this.initialize();
+    while (this.sessionId.value === "unknown") {}
 
     const data = qs.stringify({
       login_user_id: this.config.id,
@@ -166,7 +167,7 @@ export class BOJSession implements IJudgeSiteSession {
     };
 
     const submitNoticeMessage = `Submit을 시작합니다! / 문제번호: ${problem} / 선택한 언어: ${
-      language.language
+      language.name
     }`;
 
     vscode.window.showInformationMessage(submitNoticeMessage);

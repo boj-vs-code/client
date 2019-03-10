@@ -1,16 +1,15 @@
-import { window, TextEditor, workspace } from "vscode";
+import { window, TextEditor, workspace, languages } from "vscode";
 
 import * as data from "../resources/languages.json";
 
 export interface LanguageInfo {
-  language: string;
+  name: string;
   number: number;
 }
 
 export function getLanguages(): Array<LanguageInfo> {
   const languages = data.map(x => x);
   languages.sort((a, b) => a.number - b.number);
-  window.showInformationMessage("Test");
   return languages;
 }
 
@@ -23,12 +22,16 @@ export function getWorkspacePath(): string | undefined {
   }
 }
 
-export function getLanguage() {
+export function getLanguageFromEditor(): string {
   const edtior = <TextEditor>window.activeTextEditor;
   return edtior.document.languageId;
 }
 
-export function getSource() {
+export function getLanguageInfoWithName(name: string): LanguageInfo {
+  return getLanguages().filter(x => x.name === name)[0];
+}
+
+export function getSource(): string {
   const edtior = <TextEditor>window.activeTextEditor;
   return edtior.document.getText();
 }
