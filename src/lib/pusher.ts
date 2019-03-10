@@ -1,6 +1,7 @@
 import * as Pusher from "pusher-js";
-import { SubmitTaskManager } from "./api/boj/submit-task";
-import { SubmitTasksView } from "./views/tasks";
+
+import { SubmitTaskManager } from "../api/boj/submit-task";
+import { SubmitTasksView } from "../views/tasks";
 
 const pusher = new Pusher("a2cb611847131e062b32", {
   cluster: "ap1",

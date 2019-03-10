@@ -1,11 +1,11 @@
 import * as vscode from "vscode";
-import { getLanguages, getLanguage, getSource, getProblemNumber } from "./lib";
-import { bojSession } from "./session";
-import { ScoringStatusColor } from "./api/boj/enums/scoring-status-color";
-import { registerProblemSubscribers } from "./pusher";
-import { SubmitTasksView } from "./views/tasks";
 
-async function submitBOJ() {
+import { getLanguages, getLanguage, getSource, getProblemNumber } from ".";
+import { bojSession } from "../session";
+import { registerProblemSubscribers } from "./pusher";
+import { SubmitTasksView } from "../views/tasks";
+
+export async function submitBOJ() {
   vscode.window.showInformationMessage("Let's submit code xD");
 
   const languages = getLanguages();
@@ -43,5 +43,3 @@ async function submitBOJ() {
   registerProblemSubscribers(solutionId);
   SubmitTasksView.show();
 }
-
-export { submitBOJ };

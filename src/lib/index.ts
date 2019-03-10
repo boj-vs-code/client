@@ -1,5 +1,6 @@
-import * as data from "./data.json";
 import { window, TextEditor, workspace } from "vscode";
+
+import * as data from "../resources/languages.json";
 
 export interface LanguageInfo {
   language: string;
@@ -32,14 +33,6 @@ export function getSource() {
   return edtior.document.getText();
 }
 
-function isNumber(value: string): boolean {
-  return NaN !== Number(value);
-}
-
-function hasProblemNumberAndOthers(value: string): boolean {
-  return value.indexOf("-") !== -1 && isNumber(value.split("-")[0]);
-}
-
 export function getProblemNumber(): number {
   const edtior = <TextEditor>window.activeTextEditor;
   const filePath = edtior.document.fileName;
@@ -51,4 +44,12 @@ export function getProblemNumber(): number {
   } else {
     return Number(fileName.split(".")[0]);
   }
+}
+
+function isNumber(value: string): boolean {
+  return NaN !== Number(value);
+}
+
+function hasProblemNumberAndOthers(value: string): boolean {
+  return value.indexOf("-") !== -1 && isNumber(value.split("-")[0]);
 }
