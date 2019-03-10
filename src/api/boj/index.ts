@@ -15,7 +15,6 @@ import { IJudgeSiteSession } from "./interfaces/judge-site-session";
 import { IBOJScoringStatus } from "./interfaces/boj-scoring-status";
 
 export default class BOJ {
-  static session: BOJSession;
   static async getProblem(problemNumber: Number): Promise<Problem> {
     const resp = await Axios.get(
       `https://acmicpc.net/problem/${problemNumber}`
@@ -95,14 +94,21 @@ export default class BOJ {
 export class BOJSession implements IJudgeSiteSession {
   public sessionId: Cookie = new Cookie("OnlineJudge", "unknown");
   public config: IBOJConfig;
+  private initialized: boolean = false;
 
   constructor(configFilename: string = ".bojconfig") {
     this.config = Config.getBOJConfigFromFile(configFilename);
-    SessionInitilaizer.initializeBOJSession(this);
+  }
+
+  public async initialize() {
+    if (!this.initialized) {
+      await SessionInitilaizer.initializeBOJSession(this);
+      this.initialized = true;
+    }
   }
 
   public async signin() {
-    while (this.sessionId.value === "unknown") {}
+    await this.initialize();
 
     const data = qs.stringify({
       login_user_id: this.config.id,
@@ -159,11 +165,11 @@ export class BOJSession implements IJudgeSiteSession {
       Cookie: this.sessionId.toString()
     };
 
-    vscode.window.showInformationMessage(
-      `Submit을 시작합니다! / 문제번호: ${problem} / 선택한 언어: ${
-        language.language
-      }`
-    );
+    const submitNoticeMessage = `Submit을 시작합니다! / 문제번호: ${problem} / 선택한 언어: ${
+      language.language
+    }`;
+
+    vscode.window.showInformationMessage(submitNoticeMessage);
 
     const resp = await Axios({
       method: "post",
