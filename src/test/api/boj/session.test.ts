@@ -1,11 +1,10 @@
 import * as assert from "assert";
 import { BOJSession } from "../../../api/boj";
-import { writeFileSync } from "fs";
 
-suite("api/boj/session test", () => {
-  test("SessionInitilaizer#initializeBOJSession", () => {
+suite("BOJ API TEST at api/boj/session", () => {
+  test("SessionInitilaizer#initializeBOJSession", async () => {
     const session: BOJSession = new BOJSession("resources/.bojconfig");
-    assert.equal(session.config.id, "test");
-    assert.equal(session.config.password, "test");
+    await session.initialize(); // alias of SessionInitilaizer#initializeBOJSession
+    assert.notEqual(session.sessionId, "unknown");
   });
 });

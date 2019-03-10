@@ -1,16 +1,34 @@
 import * as assert from "assert";
-import BOJ from "../../../api/boj";
+import BOJ, { BOJSession } from "../../../api/boj";
 
-suite("BOJ API Tests", function() {
-  // process.on
-  // Defines a Mocha unit test
-  test("BOJ#getProblem (1000)", async () => {
-    const { title } = await BOJ.getProblem(1000);
-    assert.equal(title, "A+B");
+suite("BOJ API TEST at api/boj", function() {
+  suite("BOJ#getProblem", () => {
+    const testcases = [[1000, "A+B"], [1001, "A-B"]];
+    testcases.forEach(([problemNumber, expectedTitle]) => {
+      test(`(${problemNumber}) => ${expectedTitle}`, async () => {
+        const { title } = await BOJ.getProblem(<Number>problemNumber);
+        assert.equal(title, expectedTitle);
+      });
+    });
   });
 
-  test("BOJ#getProblem (1001)", async () => {
-    const { title } = await BOJ.getProblem(1001);
-    assert.equal(title, "A-B");
+  suite("BOJSession#solved", () => {
+    const testcases = [
+      ["12104816", "런타임 에러"],
+      ["12104815", "틀렸습니다"],
+      ["12104814", "시간 초과"],
+      ["12104813", "맞았습니다!!"],
+      ["12104783", "컴파일 에러"],
+      ["12104777", "출력 형식이 잘못되었습니다"]
+    ];
+
+    const session: BOJSession = new BOJSession("resources/.bojconfig");
+
+    testcases.forEach(([solutionId, result]) => {
+      test(`(${solutionId}) => ${result}`, async () => {
+        const scoringStatus = await session.solved(solutionId);
+        assert.equal(scoringStatus.result_name, result);
+      });
+    });
   });
 });
