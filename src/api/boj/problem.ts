@@ -18,14 +18,4 @@ export class Problem {
     public testcases: Array<TestCase>,
     public metadata: IProblemMetadata
   ) {}
-
-  public equals(problem: Problem): boolean {
-    return (
-      this.title === problem.title &&
-      this.description === problem.description &&
-      this.inputDescription === problem.inputDescription &&
-      this.outputDescription === problem.outputDescription &&
-      this.testcases === this.testcases
-    );
-  }
 }
