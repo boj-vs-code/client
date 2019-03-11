@@ -98,18 +98,16 @@ export class BOJSession implements IJudgeSiteSession {
 
   constructor(configFilename: string = ".bojconfig") {
     this.config = Config.getBOJConfigFromFile(configFilename);
+    this.initialize();
   }
 
-  public async initialize() {
-    if (!this.initialized) {
-      await SessionInitilaizer.initializeBOJSession(this);
+  public initialize() {
+    SessionInitilaizer.initializeBOJSession(this).then(() => {
       this.initialized = true;
-    }
+    });
   }
 
   public async signin() {
-    await this.initialize();
-
     const data = qs.stringify({
       login_user_id: this.config.id,
       login_password: this.config.password
@@ -118,6 +116,8 @@ export class BOJSession implements IJudgeSiteSession {
     const headers = {
       Cookie: this.sessionId.toString()
     };
+
+    while (!this.initialized) {}
 
     await Axios({
       method: "post",
