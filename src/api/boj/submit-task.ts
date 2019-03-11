@@ -4,7 +4,15 @@ import { IBOJScoringStatus } from "./interfaces/boj-scoring-status";
 class SubmitTask {
   constructor(
     public problemNumber: number,
-    public scoringStatus?: IBOJScoringStatus
+    public scoringStatus: IBOJScoringStatus = {
+      solution_id: "",
+      result: "1",
+      partially_accepted: "0",
+      timestamp: 0,
+      result_color: "waiting",
+      result_name: "준비중",
+      expect_running: ""
+    }
   ) {}
 }
 
