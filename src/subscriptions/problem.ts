@@ -7,7 +7,7 @@ const showProblemInformationSubscription = vscode.commands.registerCommand(
   "extension.showProblemInformation",
   async () => {
     const problem = await BOJ.getProblem(getProblemNumber());
-    ProblemView.show(problem);
+    ProblemView.getInstance().show();
   }
 );
 
