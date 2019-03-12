@@ -1,5 +1,5 @@
-import { SubmitTasksView } from "../../views/tasks";
-import { IBOJScoringStatus } from "./interfaces/boj-scoring-status";
+import { SubmitTasksView } from "../../../views/tasks";
+import { IBOJScoringStatus } from "../interfaces/boj-scoring-status";
 
 class SubmitTask {
   constructor(
@@ -8,7 +8,7 @@ class SubmitTask {
       solution_id: "",
       result: "1",
       partially_accepted: "0",
-      timestamp: Date.now(),
+      timestamp: 0,
       result_color: "waiting",
       result_name: "준비중",
       expect_running: ""
@@ -18,7 +18,7 @@ class SubmitTask {
 
 export class SubmitTaskManager {
   private static instance: SubmitTaskManager;
-  private submitTasks = new Map<string, SubmitTask>();
+  private submitTasks = new Array<[string, SubmitTask]>();
 
   public limit = 3;
 
@@ -29,23 +29,24 @@ export class SubmitTaskManager {
   }
 
   createTask(solutionId: string, problemNumber: number) {
-    if (SubmitTasksView.length < this.limit) {
+    if (this.submitTasks.length >= this.limit) {
+      this.submitTasks.pop();
     }
-    this.submitTasks.set(solutionId, new SubmitTask(problemNumber));
+    this.submitTasks.unshift([solutionId, new SubmitTask(problemNumber)]);
   }
 
   updateTask(solutionId: string, scoringStatus: IBOJScoringStatus): void {
-    const task = this.submitTasks.get(solutionId);
+    const task = this.submitTasks.filter(task => task[0] === solutionId)[0][1];
     if (task !== undefined) {
       task.scoringStatus = scoringStatus;
     }
   }
 
   get tasks(): Array<[string, SubmitTask]> {
-    return Array.from(this.submitTasks.entries()).reverse();
+    return this.submitTasks;
   }
 
   clear() {
-    this.submitTasks.clear();
+    this.submitTasks = [];
   }
 }
