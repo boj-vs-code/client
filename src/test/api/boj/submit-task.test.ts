@@ -24,9 +24,12 @@ suite("BOJ API TEST at api/boj/taskss", () => {
       });
       const tasks = SubmitTaskManager.getInstance().tasks;
       assert.equal(tasks.length, 3);
-      testElements.slice(-3).forEach((el, index) => {
-        assert.equal(tasks[index][0], el);
-      });
+      testElements
+        .slice(-3)
+        .reverse()
+        .forEach((el, index) => {
+          assert.equal(tasks[index][0], el);
+        });
     });
   });
 });
