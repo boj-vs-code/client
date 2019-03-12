@@ -8,7 +8,7 @@ class SubmitTask {
       solution_id: "",
       result: "1",
       partially_accepted: "0",
-      timestamp: 0,
+      timestamp: Date.now(),
       result_color: "waiting",
       result_name: "준비중",
       expect_running: ""
@@ -17,27 +17,35 @@ class SubmitTask {
 }
 
 export class SubmitTaskManager {
-  private static submitTasks = new Map<string, SubmitTask>();
+  private static instance: SubmitTaskManager;
+  private submitTasks = new Map<string, SubmitTask>();
 
-  static createTask(solutionId: string, problemNumber: number) {
+  public limit = 3;
+
+  private constructor() {}
+
+  static getInstance(): SubmitTaskManager {
+    return this.instance || (this.instance = new SubmitTaskManager());
+  }
+
+  createTask(solutionId: string, problemNumber: number) {
+    if (SubmitTasksView.length < this.limit) {
+    }
     this.submitTasks.set(solutionId, new SubmitTask(problemNumber));
   }
 
-  static updateTask(
-    solutionId: string,
-    scoringStatus: IBOJScoringStatus
-  ): void {
+  updateTask(solutionId: string, scoringStatus: IBOJScoringStatus): void {
     const task = this.submitTasks.get(solutionId);
     if (task !== undefined) {
       task.scoringStatus = scoringStatus;
     }
   }
 
-  static get tasks(): Array<[string, SubmitTask]> {
+  get tasks(): Array<[string, SubmitTask]> {
     return Array.from(this.submitTasks.entries()).reverse();
   }
 
-  static clear() {
+  clear() {
     this.submitTasks.clear();
   }
 }
