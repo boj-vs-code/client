@@ -20,11 +20,9 @@ function createAndStoreViewIfNotExists() {
   }
 }
 
-const ViewManager = {
-  get main() {
+export class ViewManager {
+  static get main() {
     createAndStoreViewIfNotExists();
     return <vscode.WebviewPanel>extensionSession.get(BOJ_VIEW);
   }
-};
-
-export { ViewManager };
+}

@@ -16,7 +16,7 @@ class SubmitTask {
   ) {}
 }
 
-class SubmitTaskManager {
+export class SubmitTaskManager {
   private static submitTasks = new Map<string, SubmitTask>();
 
   static createTask(solutionId: string, problemNumber: number) {
@@ -30,13 +30,14 @@ class SubmitTaskManager {
     const task = this.submitTasks.get(solutionId);
     if (task !== undefined) {
       task.scoringStatus = scoringStatus;
-      SubmitTasksView.render();
     }
   }
 
-  static get tasks() {
-    return Array.from(this.submitTasks.entries());
+  static get tasks(): Array<[string, SubmitTask]> {
+    return Array.from(this.submitTasks.entries()).reverse();
+  }
+
+  static clear() {
+    this.submitTasks.clear();
   }
 }
-
-export { SubmitTaskManager };
