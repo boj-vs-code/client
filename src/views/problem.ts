@@ -1,17 +1,26 @@
 import { Problem } from "../api/boj/problem";
 import { ViewManager } from ".";
+import { BaseView } from "./interfaces/base-view";
+import { ProblemManager } from "../api/boj/managers/problem";
 
-const ProblemView = {
-  show(problem: Problem) {
-    const panel = ViewManager.main;
-    panel.title = problem.title;
+export class ProblemView implements BaseView {
+  private static instance: ProblemView;
 
-    this.render(problem);
-  },
+  private constructor() {}
 
-  render(problem: Problem) {
-    const panel = ViewManager.main;
+  static getInstance(): ProblemView {
+    return this.instance || (this.instance = new ProblemView());
+  }
 
+  public VIEW_NAME = "PROBLEM_VIEW";
+
+  public show(): void {
+    ViewManager.main.title = ProblemManager.getInstance().recent.title;
+    ViewManager.main.reveal();
+  }
+
+  public render(): void {
+    const problem = ProblemManager.getInstance().recent;
     const testcases = problem.testcases
       .map(
         (value, index) =>
@@ -20,7 +29,7 @@ const ProblemView = {
       )
       .reduce((a, b) => a + b);
 
-    panel.webview.html = `
+    ViewManager.main.webview.html = `
     <h1>${problem.title}</h1>
     <h2>문제</h2>
     ${problem.description}
@@ -32,6 +41,4 @@ const ProblemView = {
     ${testcases}
   `;
   }
-};
-
-export { ProblemView };
+}

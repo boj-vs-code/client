@@ -1,70 +1,62 @@
+import { BaseView } from "./interfaces/base-view";
 import { ViewManager } from ".";
 import { ScoringStatus } from "../api/boj/enums/scoring-status";
-import { SubmitTaskManager } from "../api/boj/submit-task";
+import { SubmitTaskManager } from "../api/boj/managers/submit-task";
 import { getColorFromScoringStatus } from "../lib/color";
 
 function cast<T>(obj: any): T {
   return obj as T;
 }
 
-const SubmitTasksView = {
-  show() {
-    const panel = ViewManager.main;
+export class SubmitTasksView implements BaseView {
+  private static instance: SubmitTasksView;
 
-    panel.title = "Submit Tasks";
+  private constructor() {}
 
-    this.render();
-  },
+  static getInstance(): SubmitTasksView {
+    return this.instance || (this.instance = new SubmitTasksView());
+  }
+  public VIEW_NAME = "SUBMIT_VIEW";
 
-  render() {
-    const panel = ViewManager.main;
+  public show() {
+    ViewManager.main.title = "Submit Tasks";
+  }
 
-    const tasks = SubmitTaskManager.tasks.map(
+  public render() {
+    const tasks = SubmitTaskManager.getInstance().tasks.map(
       ([solution_id, { problemNumber, scoringStatus }]) => {
         const color = cast<ScoringStatus>(scoringStatus.result),
-          result = scoringStatus.result_name;
-
+          result = scoringStatus.result_name,
+          datetime = new Date(scoringStatus.timestamp * 1000);
         return `
-          <div data-solution-id="${solution_id}" class="submit">
-            <h3>
-              ${problemNumber}
-              <font color="${getColorFromScoringStatus(color)}">
-                ${result}
-              </font>
-            </h3>
-          </div>
-        `;
+            <div data-solution-id="${solution_id}" class="submit">
+              <h4>
+                [${datetime.toLocaleString()}]
+              </h4>
+              <h3>
+                ${problemNumber}
+                <font color="${getColorFromScoringStatus(color)}">
+                  ${result}
+                </font>
+              </h3>
+            </div>
+          `;
       }
     );
 
-    panel.webview.html = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <style>
-          body {
-            background-color: #464646;
-            color: #F7F7F7;
-          }
-
-          .submit {
-            background-color: #E3E3E3;
-            width: 25vw;
-            margin: 0 2vh;
-            border-radius: 2vmax;
-            color: black;
-            padding: 2vmax;
-          }
-        </style>
-      </head>
-      <body>
-        <h1>Submit Tasks</h1>
-        ${tasks.reduce((prev, current) => prev + current, "") ||
-          "아직 아무것도 제출하지 않으셨네요 :( / ctrl+alt+s 로 제출할 수 있어요!"}
-      </body>
-    </html>
-  `;
+    ViewManager.main.webview.html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+        </head>
+        <body>
+          <div class="container">
+            <h1>Submit Tasks</h1>
+            ${tasks.reduce((prev, current) => prev + current, "") ||
+              "아직 아무것도 제출하지 않으셨네요 :( / ctrl+alt+s 로 제출할 수 있어요!"}
+          </div>
+        </body>
+      </html>
+    `;
   }
-};
-
-export { SubmitTasksView };
+}

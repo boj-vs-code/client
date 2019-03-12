@@ -5,7 +5,7 @@ import { showProblemInformationSubscription } from "./subscriptions/problem";
 import { showSubmitTasksSubscription } from "./subscriptions/tasks";
 
 export function activate(context: vscode.ExtensionContext) {
-  LandingView.show();
+  LandingView.getInstance().show();
 
   context.subscriptions.push(submitSubscription);
   context.subscriptions.push(showProblemInformationSubscription);
