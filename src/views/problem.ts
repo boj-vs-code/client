@@ -1,9 +1,9 @@
 import { Problem } from "../api/boj/problem";
 import { ViewManager } from ".";
-import { BaseView } from "./interfaces/base-view";
+import { IBaseView } from "./interfaces/base-view";
 import { ProblemManager } from "../api/boj/managers/problem";
 
-export class ProblemView implements BaseView {
+export class ProblemView implements IBaseView {
   private static instance: ProblemView;
 
   private constructor() {}

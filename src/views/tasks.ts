@@ -1,4 +1,4 @@
-import { BaseView } from "./interfaces/base-view";
+import { IBaseView } from "./interfaces/base-view";
 import { ViewManager } from ".";
 import { ScoringStatus } from "../api/boj/enums/scoring-status";
 import { SubmitTaskManager } from "../api/boj/managers/submit-task";
@@ -8,7 +8,7 @@ function cast<T>(obj: any): T {
   return obj as T;
 }
 
-export class SubmitTasksView implements BaseView {
+export class SubmitTasksView implements IBaseView {
   private static instance: SubmitTasksView;
 
   private constructor() {}

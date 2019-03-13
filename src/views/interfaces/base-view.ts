@@ -1,4 +1,4 @@
-export interface BaseView {
+export interface IBaseView {
   VIEW_NAME: string;
 
   show(): void;

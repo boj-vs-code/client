@@ -1,7 +1,7 @@
 import { ViewManager } from ".";
-import { BaseView } from "./interfaces/base-view";
+import { IBaseView } from "./interfaces/base-view";
 
-export class LandingView implements BaseView {
+export class LandingView implements IBaseView {
   private static instance: LandingView;
 
   private constructor() {}
