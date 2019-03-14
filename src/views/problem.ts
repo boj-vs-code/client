@@ -1,9 +1,7 @@
-import { Problem } from "../api/boj/problem";
-import { ViewManager } from ".";
-import { IBaseView } from "./interfaces/base-view";
+import { ViewManager, BaseView } from ".";
 import { ProblemManager } from "../api/boj/managers/problem";
 
-export class ProblemView implements IBaseView {
+export class ProblemView extends BaseView {
   public VIEW_NAME = "PROBLEM_VIEW";
 
   public show(): void {
@@ -17,7 +15,7 @@ export class ProblemView implements IBaseView {
       .map(
         (value, index) =>
           `<h3>입력 ${index}</h3>${value.input}
-      <h3>출력 ${index}</h3>${value.output}`
+           <h3>출력 ${index}</h3>${value.output}`
       )
       .reduce((a, b) => a + b);
 

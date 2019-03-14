@@ -1,7 +1,6 @@
-import { ViewManager } from ".";
-import { IBaseView } from "./interfaces/base-view";
+import { ViewManager, BaseView } from ".";
 
-export class WelcomeView implements IBaseView {
+export class WelcomeView extends BaseView {
   public VIEW_NAME = "WELCOME_VIEW";
 
   public show(): void {

@@ -1,5 +1,4 @@
-import { IBaseView } from "./interfaces/base-view";
-import { ViewManager } from ".";
+import { ViewManager, BaseView } from ".";
 import { ScoringStatus } from "../api/boj/enums/scoring-status";
 import { SubmitTaskManager } from "../api/boj/managers/submit-task";
 import { getColorFromScoringStatus } from "../lib/color";
@@ -8,7 +7,7 @@ function cast<T>(obj: any): T {
   return obj as T;
 }
 
-export class SubmitTasksView implements IBaseView {
+export class SubmitTasksView extends BaseView {
   public VIEW_NAME = "SUBMIT_TASK_VIEW";
 
   public show() {
