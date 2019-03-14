@@ -9,7 +9,7 @@ function cast<T>(obj: any): T {
 }
 
 export class SubmitTasksView implements IBaseView {
-  public VIEW_NAME = "SUBMIT_VIEW";
+  public VIEW_NAME = "SUBMIT_TASK_VIEW";
 
   public show() {
     ViewManager.panel.title = "Submit Tasks";
