@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
-import { getProblemNumber } from "../lib";
+
 import BOJ from "../api/boj";
-import { ProblemView } from "../views/problem";
+
+import { getProblemNumber } from "../lib";
 import { ViewManager } from "../views";
 
 const showProblemInformationSubscription = vscode.commands.registerCommand(

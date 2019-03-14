@@ -1,7 +1,7 @@
 import { ViewManager, BaseView } from ".";
+import { getColorFromScoringStatus } from "../lib/color";
 import { ScoringStatus } from "../api/boj/enums/scoring-status";
 import { SubmitTaskManager } from "../api/boj/managers/submit-task";
-import { getColorFromScoringStatus } from "../lib/color";
 
 function cast<T>(obj: any): T {
   return obj as T;

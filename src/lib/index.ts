@@ -1,4 +1,4 @@
-import { window, TextEditor, workspace, languages } from "vscode";
+import { window, TextEditor, workspace } from "vscode";
 
 import * as data from "../resources/languages.json";
 

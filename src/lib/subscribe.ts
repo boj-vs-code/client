@@ -1,5 +1,5 @@
-import { SubmitTaskManager } from "../api/boj/managers/submit-task";
 import { bojSession } from "../session";
+import { SubmitTaskManager } from "../api/boj/managers/submit-task";
 
 export function registerProblemSubscribers(solution_id: string) {
   const interval = setInterval(async () => {

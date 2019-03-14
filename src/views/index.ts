@@ -1,5 +1,6 @@
-import { extensionSession } from "../session";
 import * as vscode from "vscode";
+
+import { extensionSession } from "../session";
 
 const BOJ_VIEW = "BOJ_VIEW";
 

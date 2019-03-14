@@ -8,11 +8,10 @@ import {
   getLanguageInfoWithName
 } from ".";
 
+import { ViewManager } from "../views";
 import { bojSession } from "../session";
-import { SubmitTasksView } from "../views/tasks";
 import { SubmitTaskManager } from "../api/boj/managers/submit-task";
 import { registerProblemSubscribers } from "./subscribe";
-import { ViewManager } from "../views";
 
 async function showAndPickLanguageName(): Promise<string | undefined> {
   const languages = getLanguages();

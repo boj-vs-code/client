@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { SubmitTasksView } from "../views/tasks";
+
 import { ViewManager } from "../views";
 
 const showSubmitTasksSubscription = vscode.commands.registerCommand(

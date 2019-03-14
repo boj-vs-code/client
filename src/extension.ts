@@ -1,11 +1,13 @@
 import * as vscode from "vscode";
-import { submitSubscription } from "./subscriptions/submit";
-import { showProblemInformationSubscription } from "./subscriptions/problem";
-import { showSubmitTasksSubscription } from "./subscriptions/tasks";
+
 import { ViewManager } from "./views";
-import { SubmitTasksView } from "./views/tasks";
 import { WelcomeView } from "./views/welcome";
 import { ProblemView } from "./views/problem";
+import { SubmitTasksView } from "./views/tasks";
+
+import { submitSubscription } from "./subscriptions/submit";
+import { showSubmitTasksSubscription } from "./subscriptions/tasks";
+import { showProblemInformationSubscription } from "./subscriptions/problem";
 
 export function activate(context: vscode.ExtensionContext) {
   ViewManager.registerView(new WelcomeView());
