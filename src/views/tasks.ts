@@ -9,17 +9,10 @@ function cast<T>(obj: any): T {
 }
 
 export class SubmitTasksView implements IBaseView {
-  private static instance: SubmitTasksView;
-
-  private constructor() {}
-
-  static getInstance(): SubmitTasksView {
-    return this.instance || (this.instance = new SubmitTasksView());
-  }
   public VIEW_NAME = "SUBMIT_VIEW";
 
   public show() {
-    ViewManager.main.title = "Submit Tasks";
+    ViewManager.panel.title = "Submit Tasks";
   }
 
   public render() {
@@ -44,7 +37,7 @@ export class SubmitTasksView implements IBaseView {
       }
     );
 
-    ViewManager.main.webview.html = `
+    ViewManager.panel.webview.html = `
       <!DOCTYPE html>
       <html>
         <head>
