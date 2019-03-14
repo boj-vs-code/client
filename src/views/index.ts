@@ -1,6 +1,5 @@
 import { extensionSession } from "../session";
 import * as vscode from "vscode";
-import { IBaseView } from "./interfaces/base-view";
 
 const BOJ_VIEW = "BOJ_VIEW";
 
@@ -21,20 +20,34 @@ function createAndStoreViewIfNotExists() {
   }
 }
 
+export abstract class BaseView {
+  VIEW_NAME: string = "VIEW";
+  state: any = {};
+
+  abstract show(): void;
+  abstract render(): void;
+
+  setState(state: any): void {
+    this.state = state;
+    this.render();
+  }
+}
+
 export class ViewManager {
-  private static views: IBaseView[];
-  private static currentView: IBaseView;
+  private static views: Array<BaseView> = new Array<BaseView>();
+  private static currentView: BaseView;
+  private static state: any;
 
   static get panel(): vscode.WebviewPanel {
     createAndStoreViewIfNotExists();
     return <vscode.WebviewPanel>extensionSession.get(BOJ_VIEW);
   }
 
-  static get current(): IBaseView {
+  static get current(): BaseView {
     return this.currentView;
   }
 
-  static registerView(view: IBaseView) {
+  static registerView(view: BaseView) {
     this.views.push(view);
   }
 
@@ -58,5 +71,10 @@ export class ViewManager {
     }
 
     this.currentView.show();
+    this.currentView.render();
+  }
+
+  static setState(state: any) {
+    this.currentView.setState(state);
   }
 }
