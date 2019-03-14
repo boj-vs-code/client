@@ -1,8 +1,8 @@
 import { ViewManager } from ".";
 import { IBaseView } from "./interfaces/base-view";
 
-export class LandingView implements IBaseView {
-  public VIEW_NAME = "LANDING_VIEW";
+export class WelcomeView implements IBaseView {
+  public VIEW_NAME = "WELCOME_VIEW";
 
   public show(): void {
     ViewManager.panel.title = "BOJ-vs-code";

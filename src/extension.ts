@@ -1,11 +1,11 @@
 import * as vscode from "vscode";
-import { LandingView } from "./views/landing";
 import { submitSubscription } from "./subscriptions/submit";
 import { showProblemInformationSubscription } from "./subscriptions/problem";
 import { showSubmitTasksSubscription } from "./subscriptions/tasks";
+import { ViewManager } from "./views";
 
 export function activate(context: vscode.ExtensionContext) {
-  LandingView.getInstance().show();
+  ViewManager.show("WELCOME_VIEW");
 
   context.subscriptions.push(submitSubscription);
   context.subscriptions.push(showProblemInformationSubscription);
