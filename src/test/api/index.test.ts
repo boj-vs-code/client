@@ -1,10 +1,20 @@
-import { createMockAdapter } from "../util";
+import { createMockAdapter, makeRandomString } from "../util";
 import * as qs from "querystring";
 
 const mockAdapter = createMockAdapter();
 
+mockAdapter.onGet("https://www.acmicpc.net/").reply(
+  200,
+  {},
+  {
+    "set-cookie": [
+      `OnlineJudge=${makeRandomString(26)}; path=/; \
+      domain=.acmicpc.net; secure; HttpOnly`
+    ]
+  }
+);
+
 mockAdapter.onPost("https://www.acmicpc.net/status/ajax").reply(({ data }) => {
-  console.log();
   const cases: { [solution_id: string]: string } = {
     "12104816": "런타임 에러",
     "12104815": "틀렸습니다",
