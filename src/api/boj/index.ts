@@ -17,7 +17,7 @@ import { IBOJScoringStatus } from "./interfaces/boj-scoring-status";
 export default class BOJ {
   static async getProblem(problemNumber: Number): Promise<Problem> {
     const resp = await Axios.get(
-      `https://acmicpc.net/problem/${problemNumber}`
+      `https://www.acmicpc.net/problem/${problemNumber}`
     );
 
     const options = {
