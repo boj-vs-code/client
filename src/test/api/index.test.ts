@@ -1,7 +1,19 @@
 import { createMockAdapter, makeRandomString } from "../util";
 import * as qs from "querystring";
+import { readFileSync } from "fs";
+import { getWorkspacePath } from "../../lib";
 
 const mockAdapter = createMockAdapter();
+
+mockAdapter
+  .onGet(/https\:\/\/www.acmicpc.net\/problem\/[0-9]+/)
+  .reply(config => {
+    const problemNumber = (<string>config.url).split("/").slice(-1)[0];
+    const content = readFileSync(
+      `${getWorkspacePath()}/fixtures/problems/${problemNumber}.html`
+    ).toString();
+    return [200, content];
+  });
 
 mockAdapter.onGet("https://www.acmicpc.net/").reply(
   200,
