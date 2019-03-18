@@ -22,7 +22,7 @@ suite("BOJ API TEST at api/boj", function() {
       ["12104777", "출력 형식이 잘못되었습니다"]
     ];
 
-    const session: BOJSession = new BOJSession("resources/.bojconfig");
+    const session: BOJSession = new BOJSession("fixtures/.bojconfig");
 
     testcases.forEach(([solutionId, result]) => {
       test(`(${solutionId}) => ${result}`, async () => {
