@@ -10,10 +10,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - Implements `Submit Tasks View` and Keybinding `ctrl+alt+v`
 - Add `BOJ API` testcodes
+- Add `BOJ API` mock data
 
 ### Changed
 
 - Refactoring codes
+- Restructure views
+- Use ProblemManager for caching
 - Start writing CHANGELOG
 
 ## [0.1.1] - 2019-03-06
