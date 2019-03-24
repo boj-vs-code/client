@@ -1,6 +1,9 @@
 import * as assert from "assert";
-import { ProblemManager } from "../../../../api/boj/managers/problem";
+import * as fs from "fs";
+
 import { Problem } from "../../../../api/boj/problem";
+import { ProblemManager } from "../../../../api/boj/managers/problem";
+import { getExtensionInstalledPath } from "../../../../lib";
 
 suite("BOJ API TEST at api/boj/managers/problem", () => {
   suite("ProblemManager#recent", () => {
@@ -28,10 +31,14 @@ suite("BOJ API TEST at api/boj/managers/problem", () => {
         await ProblemManager.getInstance().getProblem(1000)
       );
 
+      const path = `${getExtensionInstalledPath()}/resources/problems/1000.json`;
+
       assert.equal(actual.title, expected.title);
       assert.equal(actual.description, expected.description);
       assert.equal(actual.inputDescription, expected.inputDescription);
       assert.equal(actual.outputDescription, expected.outputDescription);
+
+      assert.ok(fs.existsSync(path));
     });
 
     test("(1001)", async () => {
@@ -47,10 +54,14 @@ suite("BOJ API TEST at api/boj/managers/problem", () => {
         await ProblemManager.getInstance().getProblem(1001)
       );
 
+      const path = `${getExtensionInstalledPath()}/resources/problems/1001.json`;
+
       assert.equal(actual.title, expected.title);
       assert.equal(actual.description, expected.description);
       assert.equal(actual.inputDescription, expected.inputDescription);
       assert.equal(actual.outputDescription, expected.outputDescription);
+
+      assert.ok(fs.existsSync(path));
     });
   });
 });
