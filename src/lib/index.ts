@@ -1,4 +1,4 @@
-import { window, TextEditor, workspace } from "vscode";
+import { window, TextEditor, workspace, extensions } from "vscode";
 
 import * as data from "../resources/languages.json";
 
@@ -40,7 +40,6 @@ export function getProblemNumber(): number {
   const edtior = <TextEditor>window.activeTextEditor;
   const filePath = edtior.document.fileName;
   const fileName = filePath.split("/").slice(-1)[0];
-  window.showInformationMessage(fileName);
 
   if (hasProblemNumberAndOthers(fileName)) {
     return Number(fileName.split("-")[0]);
@@ -55,4 +54,13 @@ function isNumber(value: string): boolean {
 
 function hasProblemNumberAndOthers(value: string): boolean {
   return value.indexOf("-") !== -1 && isNumber(value.split("-")[0]);
+}
+
+export function getExtensionInstalledPath(): string | undefined {
+  const extension = extensions.getExtension("bojvscode.boj-vs-code");
+  if (extension !== undefined) {
+    return extension.extensionPath;
+  } else {
+    return "/";
+  }
 }
