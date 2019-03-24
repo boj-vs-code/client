@@ -1,7 +1,6 @@
-import { Problem } from "../problem";
 import Axios from "axios";
+import { Problem } from "../problem";
 import { IProblemWithNumber } from "../interfaces/problem-with-number";
-import { filter } from "minimatch";
 
 export class ProblemManager {
   private API_SERVER_HOST = "boj-api.moreal.kr";
@@ -22,12 +21,14 @@ export class ProblemManager {
     return this.problems[this.problems.length - 1].problem;
   }
 
-  async getProblem(problemNumber: number): Promise<Problem | undefined> {
-    const filterdProblems = this.problems.filter(
-      x => x.problemNumber === problemNumber
+  exists(problemNumber: number): boolean {
+    return (
+      this.problems.filter(x => x.problemNumber === problemNumber).length > 0
     );
+  }
 
-    if (filterdProblems.length === 0) {
+  async getProblem(problemNumber: number): Promise<Problem | undefined> {
+    if (!this.exists(problemNumber)) {
       const resp = await Axios.get(
         `http://${this.API_SERVER_HOST}/problem/${problemNumber}`
       );
