@@ -41,3 +41,13 @@ mockAdapter.onPost("https://www.acmicpc.net/status/ajax").reply(({ data }) => {
     JSON.stringify({ result_name: cases[qs.parse(data).solution_id as string] })
   ];
 });
+
+mockAdapter
+  .onGet(/http\:\/\/boj-api.moreal.kr\/problem\/[0-9]+/)
+  .reply(config => {
+    const problemNumber = (<string>config.url).split("/").slice(-1)[0];
+    const content = readFileSync(
+      `${getWorkspacePath()}/fixtures/problems/${problemNumber}.json`
+    ).toString();
+    return [200, content];
+  });
