@@ -1,12 +1,14 @@
+import * as fs from "fs";
 import Axios from "axios";
 import { Problem } from "../problem";
-import { IProblemWithNumber } from "../interfaces/problem-with-number";
+import { getExtensionInstalledPath } from "../../../lib";
 
 export class ProblemManager {
   private API_SERVER_HOST = "boj-api.moreal.kr";
 
   private static instance: ProblemManager;
-  private problems: Array<IProblemWithNumber> = new Array<IProblemWithNumber>();
+  private problems: Map<number, Problem> = new Map<number, Problem>();
+  private recentProblemNumber: number = -1;
 
   private constructor() {}
 
@@ -15,30 +17,49 @@ export class ProblemManager {
   }
 
   get recent(): Problem | undefined {
-    if (this.problems.length === 0) {
+    if (this.recentProblemNumber === -1) {
       return undefined;
     }
-    return this.problems[this.problems.length - 1].problem;
+    return this.problems.get(this.recentProblemNumber);
   }
 
-  exists(problemNumber: number): boolean {
-    return (
-      this.problems.filter(x => x.problemNumber === problemNumber).length > 0
+  private getProblemPathOnDisk(problemNumber: number): string {
+    return `${getExtensionInstalledPath()}/resources/problem/${problemNumber}`;
+  }
+
+  private loadProblemFromDisk(problemNumber: number): Problem {
+    return JSON.parse(
+      fs.readFileSync(this.getProblemPathOnDisk(problemNumber)).toString()
     );
   }
 
-  async getProblem(problemNumber: number): Promise<Problem | undefined> {
-    if (!this.exists(problemNumber)) {
-      const resp = await Axios.get(
-        `http://${this.API_SERVER_HOST}/problem/${problemNumber}`
-      );
+  private async loadProblemFromApi(problemNumber: number): Promise<Problem> {
+    const resp = await Axios.get(
+      `http://${this.API_SERVER_HOST}/problem/${problemNumber}`
+    );
 
-      this.problems.push({
-        problemNumber: problemNumber,
-        problem: resp.data as Problem
-      });
+    return resp.data as Problem;
+  }
+
+  private existsInMemory(problemNumber: number): boolean {
+    return this.problems.has(problemNumber);
+  }
+
+  private existsInDisk(problemNumber: number): boolean {
+    return fs.existsSync(this.getProblemPathOnDisk(problemNumber));
+  }
+
+  async getProblem(problemNumber: number): Promise<Problem | undefined> {
+    if (this.existsInMemory(problemNumber)) {
+    } else if (this.existsInDisk(problemNumber)) {
+      const problem = this.loadProblemFromDisk(problemNumber);
+      this.problems.set(problemNumber, problem);
+    } else {
+      const problem = await this.loadProblemFromApi(problemNumber);
+      this.problems.set(problemNumber, problem);
     }
 
+    this.recentProblemNumber = problemNumber;
     return this.recent;
   }
 }
