@@ -5,12 +5,24 @@ export class ProblemView extends BaseView {
   public VIEW_NAME = "PROBLEM_VIEW";
 
   public show(): void {
-    ViewManager.panel.title = ProblemManager.getInstance().recent.title;
-    ViewManager.panel.reveal();
+    const problem = ProblemManager.getInstance().recent;
+    if (undefined === problem) {
+      ViewManager.panel.title = "아무런 문제도 없습니다";
+    } else {
+      ViewManager.panel.title = problem.title;
+    }
   }
 
   public render(): void {
     const problem = ProblemManager.getInstance().recent;
+
+    if (undefined === problem) {
+      ViewManager.panel.webview.html = `
+      지금 바로 해보세요!
+      `;
+      return;
+    }
+
     const testcases = problem.testcases
       .map(
         (value, index) =>
