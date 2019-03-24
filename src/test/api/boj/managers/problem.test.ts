@@ -44,7 +44,7 @@ suite("BOJ API TEST at api/boj/managers/problem", () => {
       } as Problem;
 
       const actual = <Problem>(
-        await ProblemManager.getInstance().getProblem(1000)
+        await ProblemManager.getInstance().getProblem(1001)
       );
 
       assert.equal(actual.title, expected.title);
