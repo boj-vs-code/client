@@ -24,7 +24,7 @@ export class ProblemManager {
   }
 
   private getProblemPathOnDisk(problemNumber: number): string {
-    return `${getExtensionInstalledPath()}/resources/problem/${problemNumber}`;
+    return `${getExtensionInstalledPath()}/resources/problems/${problemNumber}.json`;
   }
 
   private loadProblemFromDisk(problemNumber: number): Problem {
@@ -39,6 +39,13 @@ export class ProblemManager {
     );
 
     return resp.data as Problem;
+  }
+
+  private saveProblemOnDisk(problemNumber: number, problem: Problem) {
+    fs.writeFileSync(
+      this.getProblemPathOnDisk(problemNumber),
+      JSON.stringify(problem)
+    );
   }
 
   private existsInMemory(problemNumber: number): boolean {
@@ -56,6 +63,7 @@ export class ProblemManager {
       this.problems.set(problemNumber, problem);
     } else {
       const problem = await this.loadProblemFromApi(problemNumber);
+      this.saveProblemOnDisk(problemNumber, problem);
       this.problems.set(problemNumber, problem);
     }
 
