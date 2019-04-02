@@ -4,7 +4,7 @@ import { Problem } from "../problem";
 import { getExtensionInstalledPath } from "../../../lib";
 
 export class ProblemManager {
-  private API_SERVER_HOST = "boj-api.moreal.kr";
+  private API_SERVER_HOST = "boj-vs-code.appspot.com";
 
   private static instance: ProblemManager;
   private problems: Map<number, Problem> = new Map<number, Problem>();
