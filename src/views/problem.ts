@@ -1,5 +1,6 @@
 import { ViewManager, BaseView } from ".";
 import { ProblemManager } from "../api/boj/managers/problem";
+import { log } from "util";
 
 export class ProblemView extends BaseView {
   public VIEW_NAME = "PROBLEM_VIEW";
@@ -23,22 +24,44 @@ export class ProblemView extends BaseView {
       return;
     }
 
+    const isOdd = (x: number) => x % 2;
+
     const testcases = problem.testcases
       .map(
         (value, index) =>
-          `<h3>입력 ${index}</h3>${value.input}
-           <h3>출력 ${index}</h3>${value.output}`
+          `<h3>${isOdd(index) ? "출력" : "입력"} ${Math.floor(
+            index / 2
+          )}</h3><pre>${value}</pre>`
       )
       .reduce((a, b) => a + b);
 
+    log(JSON.stringify(problem.description.split("\n")));
+
+    const convertHtml = (s: string) =>
+      s
+        .split("\n")
+        .map(x => (x === "" ? "" : `<p>${x}</p>`))
+        .reduce((prev, next) => prev + next, "");
+
+    const style = `
+    p {
+      margin: 0 0 10px;
+      font-size: medium;
+      line-height: 30px;
+    }`;
+
     ViewManager.panel.webview.html = `
+    <style>
+      ${style}
+    </style>
+
     <h1>${problem.title}</h1>
     <h2>문제</h2>
-    ${problem.description}
+    ${convertHtml(problem.description)}
     <h2>입력</h2>
-    ${problem.inputDescription}
+    ${convertHtml(problem.inputDescription)}
     <h2>출력</h2>
-    ${problem.outputDescription}
+    ${convertHtml(problem.outputDescription)}
     <h2>테스트 케이스</h2>
     ${testcases}
   `;
