@@ -43,7 +43,7 @@ mockAdapter.onPost("https://www.acmicpc.net/status/ajax").reply(({ data }) => {
 });
 
 mockAdapter
-  .onGet(/http\:\/\/boj-api.moreal.kr\/problem\/[0-9]+/)
+  .onGet(/http\:\/\/boj-vs-code\.appspot\.com\/problem\/[0-9]+/)
   .reply(config => {
     const problemNumber = (<string>config.url).split("/").slice(-1)[0];
     const content = readFileSync(

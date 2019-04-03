@@ -18,6 +18,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Restructure views
 - Use ProblemManager for caching
 - Start writing CHANGELOG
+- Implement boj-problem-api to have better speed
 
 ## [0.1.1] - 2019-03-06
 

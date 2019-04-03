@@ -8,6 +8,7 @@ import { getExtensionInstalledPath } from "../../../../lib";
 suite("BOJ API TEST at api/boj/managers/problem", () => {
   suite("ProblemManager#recent", () => {
     test("when first, will return undefined", () => {
+      ProblemManager.getInstance().clear();
       assert.equal(undefined, ProblemManager.getInstance().recent);
     });
 

@@ -6,91 +6,18 @@ import { parse, HTMLElement } from "node-html-parser";
 import { LanguageInfo } from "../../lib";
 
 import { SessionInitilaizer } from "./session";
-import { Problem } from "./problem";
-import { TestCase } from "./testcase";
 import { Cookie } from "./cookie";
 import { Config } from "./config";
 import { IBOJConfig } from "./interfaces/boj-config";
 import { IJudgeSiteSession } from "./interfaces/judge-site-session";
 import { IBOJScoringStatus } from "./interfaces/boj-scoring-status";
+import { ProblemManager } from "./managers/problem";
 
 export default class BOJ {
-  static async getProblem(problemNumber: Number): Promise<Problem> {
-    const resp = await Axios.get(
-      `https://www.acmicpc.net/problem/${problemNumber}`
-    );
-
-    const options = {
-      lowerCaseTagName: false,
-      script: false,
-      style: false,
-      pre: true
-    };
-
-    const root: HTMLElement = <HTMLElement>parse(resp.data, options);
-    const problemInfoElements = root.querySelector("#problem-info")
-      .childNodes[3].childNodes[1].childNodes;
-
-    const testcases: Array<TestCase> = new Array<TestCase>();
-
-    for (let i = 1; i <= 10; ++i) {
-      const inputElement = root.querySelector(`#sample-input-${i}`);
-      const outputElement = root.querySelector(`#sample-output-${i}`);
-      if (inputElement === null || outputElement === null) {
-        break;
-      }
-
-      const input = `<pre>${inputElement.innerHTML
-        .trim()
-        .replace(/\r\n/g, "\n")}</pre>`;
-      const output = `<pre>${outputElement.innerHTML
-        .trim()
-        .replace(/\r\n/g, "\n")}</pre>`;
-
-      testcases.push(new TestCase(input, output));
-    }
-
-    const title = root.querySelector("#problem_title").innerHTML.trim();
-    const description = root
-      .querySelector("#problem_description")
-      .innerHTML.trim();
-    const inputDescription = root
-      .querySelector("#problem_input")
-      .innerHTML.trim();
-    const outputDescription = root
-      .querySelector("#problem_output")
-      .innerHTML.trim();
-    const [
-      timeLimit,
-      memoryLimit,
-      submitCount,
-      successCount,
-      successPeopleCount,
-      answerPercent
-    ] = problemInfoElements
-      .map(x => x.rawText)
-      .filter(x => x.indexOf("\t") === -1);
-
-    const metadata = {
-      timeLimit,
-      memoryLimit,
-      submitCount,
-      successCount,
-      successPeopleCount,
-      answerPercent
-    };
-
-    return new Problem(
-      title,
-      description,
-      inputDescription,
-      outputDescription,
-      testcases,
-      metadata
-    );
+  static getProblem(problemNumber: number) {
+    return ProblemManager.getInstance().getProblem(problemNumber);
   }
 }
-
 export class BOJSession implements IJudgeSiteSession {
   public sessionId: Cookie = new Cookie("OnlineJudge", "unknown");
   public config: IBOJConfig;
