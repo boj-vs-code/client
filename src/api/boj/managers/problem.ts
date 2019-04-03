@@ -23,6 +23,10 @@ export class ProblemManager {
     return this.problems.get(this.recentProblemNumber);
   }
 
+  public clear() {
+    this.problems.clear();
+  }
+
   private getProblemPathOnDisk(problemNumber: number): string {
     return `${getExtensionInstalledPath()}/resources/problems/${problemNumber}.json`;
   }
