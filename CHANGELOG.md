@@ -4,7 +4,7 @@ All notable changes to the "boj-vs-code" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
+## [0.1.2] - 2019-07-10
 
 ### Added
 
