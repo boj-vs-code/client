@@ -3,10 +3,11 @@ import BOJ, { BOJSession } from "../../../api/boj";
 
 suite("BOJ API TEST at api/boj", function() {
   suite("BOJ#getProblem", () => {
-    const testcases = [[1000, "A+B"], [1001, "A-B"]];
+    const testcases: Array<[number, string]> = [[1000, "A+B"], [1001, "A-B"]];
     testcases.forEach(([problemNumber, expectedTitle]) => {
       test(`(${problemNumber}) => ${expectedTitle}`, async () => {
-        const { title } = await BOJ.getProblem(<Number>problemNumber);
+        const problem = await BOJ.getProblem(problemNumber);
+        const { title } = problem || { title: undefined };
         assert.equal(title, expectedTitle);
       });
     });
@@ -22,7 +23,7 @@ suite("BOJ API TEST at api/boj", function() {
       ["12104777", "출력 형식이 잘못되었습니다"]
     ];
 
-    const session: BOJSession = new BOJSession("resources/.bojconfig");
+    const session: BOJSession = new BOJSession("fixtures/.bojconfig");
 
     testcases.forEach(([solutionId, result]) => {
       test(`(${solutionId}) => ${result}`, async () => {

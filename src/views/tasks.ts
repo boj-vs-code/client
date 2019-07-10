@@ -1,25 +1,17 @@
-import { BaseView } from "./interfaces/base-view";
-import { ViewManager } from ".";
+import { ViewManager, BaseView } from ".";
+import { getColorFromScoringStatus } from "../lib/color";
 import { ScoringStatus } from "../api/boj/enums/scoring-status";
 import { SubmitTaskManager } from "../api/boj/managers/submit-task";
-import { getColorFromScoringStatus } from "../lib/color";
 
 function cast<T>(obj: any): T {
   return obj as T;
 }
 
-export class SubmitTasksView implements BaseView {
-  private static instance: SubmitTasksView;
-
-  private constructor() {}
-
-  static getInstance(): SubmitTasksView {
-    return this.instance || (this.instance = new SubmitTasksView());
-  }
-  public VIEW_NAME = "SUBMIT_VIEW";
+export class SubmitTasksView extends BaseView {
+  public VIEW_NAME = "SUBMIT_TASK_VIEW";
 
   public show() {
-    ViewManager.main.title = "Submit Tasks";
+    ViewManager.panel.title = "Submit Tasks";
   }
 
   public render() {
@@ -44,7 +36,7 @@ export class SubmitTasksView implements BaseView {
       }
     );
 
-    ViewManager.main.webview.html = `
+    ViewManager.panel.webview.html = `
       <!DOCTYPE html>
       <html>
         <head>

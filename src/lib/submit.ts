@@ -8,8 +8,8 @@ import {
   getLanguageInfoWithName
 } from ".";
 
+import { ViewManager } from "../views";
 import { bojSession } from "../session";
-import { SubmitTasksView } from "../views/tasks";
 import { SubmitTaskManager } from "../api/boj/managers/submit-task";
 import { registerProblemSubscribers } from "./subscribe";
 
@@ -54,5 +54,5 @@ export async function submitBOJ() {
   const solutionId = await bojSession.submit(problemNumber, language, source);
   SubmitTaskManager.getInstance().createTask(solutionId, problemNumber);
   registerProblemSubscribers(solutionId);
-  SubmitTasksView.getInstance().show();
+  ViewManager.show("SUBMIT_TASK_VIEW");
 }

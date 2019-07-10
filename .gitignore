@@ -3,3 +3,4 @@ node_modules
 *.vsix
 out
 .editorconfig
+resources/problems/*.json

@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
-import { submitBOJ } from "../lib/submit";
+
 import { log } from "util";
+import { submitBOJ } from "../lib/submit";
 
 const submitSubscription = vscode.commands.registerCommand(
   "extension.submitBOJ",
