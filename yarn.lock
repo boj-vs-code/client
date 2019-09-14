@@ -53,10 +53,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.39.tgz#e7e87ad00364dd7bc485c940926345b8ec1a26ca"
   integrity sha512-rE7fktr02J8ybFf6eysife+WF+L4sAHWzw09DgdCebEu+qDwMvv4zl6Bc+825ttGZP73kCKxa3dhJOoGJ8+5mA==
 
-"@types/pusher-js@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@types/pusher-js/-/pusher-js-4.2.0.tgz#88a06cc695a4cd5656738db9f66c9c9cc5057806"
-  integrity sha512-iCvPvf7HbfuR5TPVWjof/sIWyT+bSJYCT0IDHk5WjeZ2CT8XYQIQBiVGutrqDk7erXQUq+L0iAG9r2kig0f6IA==
+"@types/pusher-js@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@types/pusher-js/-/pusher-js-4.2.2.tgz#129fae1854255c5883e874137cd045c48d0a422a"
+  integrity sha512-LP9isBRAFlNzQohQtySJxJjzmy4zQCcv5xGZD2G3rsDnTWfpEkFKyLw3x9711pFAXwwUl9ZivxKkcnFr8umSAQ==
 
 "@types/undertaker-registry@*":
   version "1.0.1"
