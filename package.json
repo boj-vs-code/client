@@ -56,7 +56,7 @@
   "devDependencies": {
     "@types/mocha": "^5.2.7",
     "@types/node": "^8.10.25",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "dom-parser": "^0.1.5",
     "node-html-parser": "^1.1.12",
     "tslint": "^5.8.0",
