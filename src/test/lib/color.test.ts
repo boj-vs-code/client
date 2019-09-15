@@ -8,10 +8,10 @@ suite("Rendering Libraries Test as lib/color", () => {
   const testcases: string[] = Object.keys(ScoringStatusColor);
 
   suite("getColorFromScoringStatus", () => {
-    testcases.forEach(x => {
+    testcases.forEach((x: string) => {
       test(`(${x})`, () => {
         const scoringStatus = (ScoringStatus[x as any] as any) as ScoringStatus;
-        const color = ScoringStatusColor[x as any];
+        const color = ScoringStatusColor[x as keyof typeof ScoringStatusColor];
 
         assert.equal(getColorFromScoringStatus(scoringStatus), color);
       });

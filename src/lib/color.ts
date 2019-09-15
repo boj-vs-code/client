@@ -3,5 +3,5 @@ import { ScoringStatusColor } from "../api/boj/enums/scoring-status-color";
 
 export function getColorFromScoringStatus(code: ScoringStatus): string {
   const status = ScoringStatus[code];
-  return ScoringStatusColor[status as any];
+  return ScoringStatusColor[status as keyof typeof ScoringStatusColor];
 }

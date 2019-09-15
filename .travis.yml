@@ -3,21 +3,27 @@ language: node_js
 node_js:
 - 10
 
+addons:
+  yarn: 1.17.3
+  apt:
+  packages:
+    - xvfb
+
 before_install:
-- if [ $TRAVIS_OS_NAME == "linux" ]; then
-    export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
-    sh -e /etc/init.d/xvfb start;
-    sleep 3;
-  fi
+- export DISPLAY=':99.0'
+- Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 
 install:
-- npm install
+- yarn
 
 script:
-- npm run test
+- yarn test
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+
+after_failure:
+- cat ~/.npm/_logs/*-debug.log
 
 notification:
   email:
