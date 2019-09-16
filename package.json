@@ -60,7 +60,7 @@
     "dom-parser": "^0.1.5",
     "node-html-parser": "^1.1.12",
     "tslint": "^5.20.0",
-    "typescript": "~3.1.4",
+    "typescript": "~3.6.3",
     "vscode": "^1.1.36"
   },
   "dependencies": {
