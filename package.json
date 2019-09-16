@@ -5,7 +5,7 @@
   "version": "0.1.2",
   "publisher": "bojvscode",
   "repository": "https://github.com/boj-vs-code/client",
-  "icon": "https://github.com/boj-vs-code/client/raw/master/resources/images/logo-white.png",
+  "icon": "resources/images/logo-white.png",
   "engines": {
     "vscode": "^1.30.0"
   },
