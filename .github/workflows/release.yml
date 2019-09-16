@@ -10,7 +10,7 @@ jobs:
     runs-on: linux
     steps:
     - uses: actions/checkout@master
-    - uses: actions/setup-node
+    - uses: actions/setup-node@master
       with:
         node-version: 10
     - name: npm install
