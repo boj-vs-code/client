@@ -15,10 +15,9 @@ jobs:
         node-version: 10
     - name: npm install
       run: npm install
+
     - name: build
       run: npm run compile
-    - name: test
-      run: npm test
     - name: publish (release)
       uses: lannonbr/vsce-action@75a30e3
       with:
