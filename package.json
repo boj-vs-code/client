@@ -69,7 +69,7 @@
     "@types/pusher-js": "^4.2.0",
     "axios-mock-adapter": "^1.16.0",
     "decache": "^4.5.1",
-    "del": "^4.0.0",
+    "del": "^5.1.0",
     "glob": "^7.1.3",
     "gulp": "^4.0.0",
     "gulp-cli": "^2.0.1",
