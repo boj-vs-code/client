@@ -2,10 +2,10 @@
   "name": "boj-vs-code",
   "displayName": "boj-vs-code",
   "description": "",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "bojvscode",
-  "repository": "https://github.com/moreal/boj-vs-code",
-  "icon": "resources/images/logo-white.png",
+  "repository": "https://github.com/boj-vs-code/client",
+  "icon": "https://github.com/boj-vs-code/client/raw/master/resources/images/logo-white.png",
   "engines": {
     "vscode": "^1.30.0"
   },

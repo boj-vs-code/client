@@ -2,30 +2,23 @@
 
 ## 0.1.2
 
-Released on 2019-07-10
+Released on 2019-11-17
 
-### Added
+### Added interfaces
 
-- Implements `Submit Tasks View` and Keybinding `ctrl+alt+v`
-- Add `BOJ API` testcodes
-- Add `BOJ API` mock data
+- Added view to show tasks sumitted with keybinding, `ctrl`+`alt`+`v`.
 
-### Changed
+### Behavior changes
 
-- Refactoring codes
-- Restructure views
-- Use ProblemManager for caching
-- Start writing CHANGELOG
-- Implement boj-problem-api to have better speed
+- It becames to use `ProblemManager` to cache.
+- '[boj-vs-code/problem]' was implemented to give users better speed.
+
+[boj-vs-code/problem]: https://github.com/boj-vs-code/problem
 
 ## 0.1.1
 
 Released on 2019-03-06
 
-### Added
+## 0.0.0
 
-- Start using BOJ-vs-code logo
-
-### Changed
-
-- Restructure this project's directory
+Initial Release.
