@@ -1,0 +1,25 @@
+on:
+  push:
+    tags:
+    - v[0-9].[0-9].[0-9]
+
+name: Release
+
+jobs:
+  build-and-release:
+    runs-on: linux
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node
+      with:
+        node-version: 10
+    - name: npm install
+      run: npm install
+    - name: build
+      run: npm run compile
+    - name: test
+      run: npm test
+    - name: publish (release)
+      uses: lannonbr/vsce-action@75a30e3
+      with:
+        args: publish -p ${{ secrets.VSCE_TOKEN }}
