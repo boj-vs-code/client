@@ -11,7 +11,7 @@ export class Executor {
     private prepare(
         sourceFilePath: string,
         temporaryDirectoryPath: string) {
-        execSync(`BOJ_TEMPDIR=${temporaryDirectoryPath} BOJ_SOURCE_FILE=${sourceFilePath}; ` + this.prepareCommand)
+        execSync(`BOJ_TEMPDIR=${temporaryDirectoryPath} BOJ_SOURCE_FILE=${sourceFilePath}; ` + this.prepareCommand);
     }
 
     private run(
@@ -30,7 +30,7 @@ export class Executor {
 
         const temporaryDirectory = dirSync();
         const temporaryDirectoryPath = temporaryDirectory.name;
-        this.prepare(sourceFilePath, temporaryDirectoryPath)
+        this.prepare(sourceFilePath, temporaryDirectoryPath);
         for (let i  = 0; i < testcases.length; i += 2) {
             const input = testcases[i], expectedOutput = testcases[i + 1];
             const result = this.run(sourceFilePath, temporaryDirectoryPath, input, expectedOutput);
@@ -41,4 +41,4 @@ export class Executor {
         temporaryDirectory.removeCallback();
         return [true, '', '', ''];
     }
-};
+}
