@@ -2,5 +2,13 @@
     "Python 2": {
         "compile": "python2 -c \"import py_compile; py_compile.compile('$BOJ_SOURCE_FILE')\"",
         "execute": "python2 $BOJ_SOURCE_FILE"
+    },
+    "Python 3": {
+        "compile": "python3 -c \"import py_compile; py_compile.compile(r'$BOJ_SOURCE_FILE')\"",
+        "execute": "python3 $BOJ_SOURCE_FILE"
+    },
+    "C": {
+        "compile": "gcc $BOJ_SOURCE_CODE -o $BOJ_TMPDIR/Main -O2 -Wall -lm -static -std=c99 -DONLINE_JUDGE -DBOJ",
+        "execute": "$BOJ_TMPDIR/Main"
     }
 }
