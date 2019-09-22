@@ -19,7 +19,7 @@ export class Executor {
         temporaryDirectoryPath: string,
         input: string,
         expectedOutput: string): [boolean, string, string, string] {
-        const buffer = execSync(`BOJ_TEMP_CODE=${temporaryDirectoryPath} BOJ_SOURCE_FILE=${sourceFilePath}; `+
+        const buffer = execSync(`BOJ_TEMPDIR=${temporaryDirectoryPath} BOJ_SOURCE_FILE=${sourceFilePath}; `+
             this.runCommand, {input: input});
         const output = buffer.toString();
         return [expectedOutput === output, input, expectedOutput, output];
