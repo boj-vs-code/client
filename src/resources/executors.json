@@ -10,5 +10,9 @@
     "C": {
         "compile": "gcc $BOJ_SOURCE_FILE -o $BOJ_TEMPDIR/Main -O2 -Wall -lm -static -std=c99 -DONLINE_JUDGE -DBOJ",
         "execute": "$BOJ_TEMPDIR/Main"
+    },
+    "C++": {
+        "compile": "g++ $BOJ_SOURCE_FILE -o $BOJ_TEMPDIR/Main -O2 -Wall -lm -static -std=gnu++98 -DONLINE_JUDGE -DBOJ",
+        "execute": "$BOJ_TEMPDIR/Main"
     }
 }
