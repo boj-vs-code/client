@@ -6,7 +6,8 @@ suite("ExecutorManager", () => {
   const testcases = [
     ["Python 2", "solve.py"],
     ["Python 3", "solve.py"],
-    ["C", "solve.c"]
+    ["C", "solve.c"],
+    ["C++", "solve.cc"],
   ];
 
   testcases.forEach(([languageName, sourceFile]) => {
