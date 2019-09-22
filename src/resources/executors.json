@@ -8,7 +8,7 @@
         "execute": "python3 $BOJ_SOURCE_FILE"
     },
     "C": {
-        "compile": "gcc $BOJ_SOURCE_CODE -o $BOJ_TMPDIR/Main -O2 -Wall -lm -static -std=c99 -DONLINE_JUDGE -DBOJ",
-        "execute": "$BOJ_TMPDIR/Main"
+        "compile": "gcc $BOJ_SOURCE_FILE -o $BOJ_TEMPDIR/Main -O2 -Wall -lm -static -std=c99 -DONLINE_JUDGE -DBOJ",
+        "execute": "$BOJ_TEMPDIR/Main"
     }
 }
