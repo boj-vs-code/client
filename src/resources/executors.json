@@ -1,0 +1,6 @@
+{
+    "Python 2": {
+        "compile": "python2 -c \"import py_compile; py_compile.compile($BOJ_SOURCE_FILE)\"",
+        "execute": "python2 $BOJ_SOURCE_FILE"
+    }
+}
