@@ -1,5 +1,6 @@
 import { window, TextEditor, workspace, extensions } from "vscode";
 
+import * as vscode from "vscode";
 import * as data from "../resources/languages.json";
 
 export interface LanguageInfo {
@@ -62,5 +63,35 @@ export function getExtensionInstalledPath(): string | undefined {
     return extension.extensionPath;
   } else {
     return "/";
+  }
+}
+
+export function getSourceFilePath(): string {
+  const edtior = <TextEditor>window.activeTextEditor;
+  return edtior.document.uri.fsPath; 
+}
+
+
+export async function showAndPickLanguageName(): Promise<string | undefined> {
+  const languages = getLanguages();
+  const languageNames = languages.map(x => x.name);
+  const regexp = new RegExp(`^${getLanguageFromEditor()}(\\s|$|\\d)+`);
+
+  const similarLanguages = languageNames.filter(
+    x =>
+      x
+        .replace(/\+/g, "p")
+        .replace(/\#/g, "sharp")
+        .replace(/\./g, "")
+        .toLowerCase()
+        .search(regexp) !== -1
+  );
+
+  if (similarLanguages.length === 1) {
+    return similarLanguages[0];
+  } else {
+    return await vscode.window.showQuickPick(
+      0 === similarLanguages.length ? languageNames : similarLanguages
+    );
   }
 }
