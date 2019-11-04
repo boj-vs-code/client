@@ -2,40 +2,15 @@ import * as vscode from "vscode";
 
 import {
   getSource,
-  getLanguages,
   getProblemNumber,
-  getLanguageFromEditor,
-  getLanguageInfoWithName
+  getLanguageInfoWithName,
+  showAndPickLanguageName
 } from ".";
 
 import { ViewManager } from "../views";
 import { bojSession } from "../session";
 import { SubmitTaskManager } from "../api/boj/managers/submit-task";
 import { registerProblemSubscribers } from "./subscribe";
-
-async function showAndPickLanguageName(): Promise<string | undefined> {
-  const languages = getLanguages();
-  const languageNames = languages.map(x => x.name);
-  const regexp = new RegExp(`^${getLanguageFromEditor()}(\\s|$|\\d)+`);
-
-  const similarLanguages = languageNames.filter(
-    x =>
-      x
-        .replace(/\+/g, "p")
-        .replace(/\#/g, "sharp")
-        .replace(/\./g, "")
-        .toLowerCase()
-        .search(regexp) !== -1
-  );
-
-  if (similarLanguages.length === 1) {
-    return similarLanguages[0];
-  } else {
-    return await vscode.window.showQuickPick(
-      0 === similarLanguages.length ? languageNames : similarLanguages
-    );
-  }
-}
 
 export async function submitBOJ() {
   vscode.window.showInformationMessage("Let's submit code xD");
