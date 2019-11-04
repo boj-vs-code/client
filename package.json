@@ -29,20 +29,28 @@
       {
         "command": "extension.showSubmitTasks",
         "key": "ctrl+alt+v"
+      },
+      {
+        "command": "extension.executeTest",
+        "key": "ctrl+shift+alt+r"
       }
     ],
     "commands": [
       {
         "command": "extension.submitBOJ",
-        "title": "Submit Source to BOJ"
+        "title": "BOJ: Submit Source to BOJ"
       },
       {
         "command": "extension.showProblemInformation",
-        "title": "Show Problem Information"
+        "title": "BOJ: Show Problem Information"
       },
       {
         "command": "extension.showSubmitTasks",
-        "title": "Show Submit Tasks"
+        "title": "BOJ: Show Submit Tasks"
+      },
+      {
+        "command": "extension.executeTest",
+        "title": "BOJ: Run Testcases"
       }
     ]
   },
