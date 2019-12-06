@@ -9,7 +9,7 @@ function createAndStoreViewIfNotExists() {
     const panel = vscode.window.createWebviewPanel(
       "boj-vs-code-view",
       "",
-      vscode.ViewColumn.Eight,
+      vscode.ViewColumn.Active,
       {}
     );
 
