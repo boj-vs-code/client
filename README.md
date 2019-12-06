@@ -6,6 +6,8 @@
 
 [백준 온라인 저지]의 문제를 vscode 환경에서 편하게 풀 수 있게끔 도와주는 vscode extension.
 
+`.boj` 파일을 workspace 내에 생성해주시면 확장프로그램이 활성화 됩니다!
+
 [백준 온라인 저지]: https://boj.kr
 
 ## Features
