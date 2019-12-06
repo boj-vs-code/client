@@ -20,21 +20,32 @@ export default class BOJ {
 }
 export class BOJSession implements IJudgeSiteSession {
   public sessionId: Cookie = new Cookie("OnlineJudge", "unknown");
-  public config: IBOJConfig;
+  public config?: IBOJConfig;
   private initialized: boolean = false;
 
-  constructor(configFilename: string = ".bojconfig") {
+  public loadConfigFromFile(configFilename: string = ".bojconfig") {
     this.config = Config.getBOJConfigFromFile(configFilename);
-    this.initialize();
   }
 
   public initialize() {
+    if (this.config === null) {
+      this.loadConfigFromFile();
+    }
     SessionInitilaizer.initializeBOJSession(this).then(() => {
       this.initialized = true;
     });
   }
 
   public async signin() {
+    if (this.config === null || this.config === undefined) {
+      this.loadConfigFromFile();
+    }
+
+    // this condition is useless, but tsc made me do it. ㅡ.ㅡ
+    if (this.config === undefined) {
+      return;
+    }
+
     const data = qs.stringify({
       login_user_id: this.config.id,
       login_password: this.config.password

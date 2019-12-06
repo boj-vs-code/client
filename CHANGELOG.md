@@ -1,8 +1,12 @@
 # CHANGELOG
 
-## 0.2.0
+## 0.3.0
 
 To be released.
+
+## 0.2.0
+
+Released on 2019-12-07
 
 - Added function to run testcases automatically.
 - Support languages during running testcases
