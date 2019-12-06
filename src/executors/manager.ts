@@ -13,8 +13,13 @@ export class ExecutorManager {
      * 
      * @param languageName name of language, based on resources/languages.json
      */
-    static get(languageName:　string): Executor|undefined {
+    static get(languageName: string): Executor|undefined {
         const executeMethod: IExecuteMethod = executors[languageName];
         return new Executor(executeMethod.compile, executeMethod.execute);
+    }
+
+    static exists(languageName: string): boolean {
+        const executeMethod: IExecuteMethod = executors[languageName];
+        return executeMethod !== undefined;
     }
 }

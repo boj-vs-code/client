@@ -22,7 +22,12 @@ export class Executor {
         const buffer = execSync(`BOJ_TEMPDIR=${temporaryDirectoryPath} BOJ_SOURCE_FILE=${sourceFilePath}; `+
             this.runCommand, {input: input});
         const output = buffer.toString();
-        return [expectedOutput === output, input, expectedOutput, output];
+        return [
+            expectedOutput.trim() === output.trim(),
+            input,
+            expectedOutput,
+            output
+        ];
     }
 
     public test(sourceFilePath: string, testcases: Array<string>): [boolean, string, string, string] {
