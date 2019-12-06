@@ -13,40 +13,24 @@
     "Other"
   ],
   "activationEvents": [
-    "workspaceContains:/.bojconfig"
+    "workspaceContains:**/.boj"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "keybindings": [
       {
-        "command": "extension.submitBOJ",
-        "key": "ctrl+alt+s"
-      },
-      {
         "command": "extension.showProblemInformation",
         "key": "ctrl+alt+i"
       },
       {
-        "command": "extension.showSubmitTasks",
-        "key": "ctrl+alt+v"
-      },
-      {
         "command": "extension.executeTest",
-        "key": "ctrl+shift+alt+r"
+        "key": "ctrl+alt+r"
       }
     ],
     "commands": [
       {
-        "command": "extension.submitBOJ",
-        "title": "BOJ: Submit Source to BOJ"
-      },
-      {
         "command": "extension.showProblemInformation",
         "title": "BOJ: Show Problem Information"
-      },
-      {
-        "command": "extension.showSubmitTasks",
-        "title": "BOJ: Show Submit Tasks"
       },
       {
         "command": "extension.executeTest",
