@@ -2,7 +2,7 @@
   "name": "boj-vs-code",
   "displayName": "boj-vs-code",
   "description": "",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "bojvscode",
   "repository": "https://github.com/boj-vs-code/client",
   "icon": "resources/images/logo.png",
@@ -13,7 +13,7 @@
     "Other"
   ],
   "activationEvents": [
-    "workspaceContains:**/.boj"
+    "workspaceContains:.boj"
   ],
   "main": "./out/extension.js",
   "contributes": {
