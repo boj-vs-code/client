@@ -13,28 +13,32 @@
     "Other"
   ],
   "activationEvents": [
-    "workspaceContains:.boj"
+    "workspaceContains:/.boj"
   ],
+  "preview": true,
   "main": "./out/extension.js",
   "contributes": {
     "keybindings": [
       {
-        "command": "extension.showProblemInformation",
+        "command": "bojvscode.showProblemInformation",
         "key": "ctrl+alt+i"
       },
       {
-        "command": "extension.executeTest",
+        "command": "bojvscode.executeTest",
         "key": "ctrl+alt+r"
       }
     ],
     "commands": [
       {
-        "command": "extension.showProblemInformation",
-        "title": "BOJ: Show Problem Information"
+        "command": "bojvscode.showProblemInformation",
+        "title": "Show Problem Information",
+        "category": "BOJ"
       },
       {
-        "command": "extension.executeTest",
-        "title": "BOJ: Run Testcases"
+        "command": "bojvscode.executeTest",
+        "title": "Run Testcases",
+        "category": "BOJ"
+
       }
     ]
   },
@@ -48,18 +52,11 @@
   "devDependencies": {
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.7.12",
-    "axios": "^0.19.0",
-    "dom-parser": "^0.1.5",
-    "node-html-parser": "^1.1.12",
     "tslint": "^5.20.0",
     "typescript": "~3.6.3",
-    "vscode": "^1.1.36"
-  },
-  "dependencies": {
+    "vscode": "^1.1.36",
     "@types/glob": "^7.1.1",
     "@types/gulp": "^4.0.6",
-    "@types/pusher-js": "^4.2.0",
-    "@types/tmp": "^0.1.0",
     "axios-mock-adapter": "^1.16.0",
     "decache": "^4.5.1",
     "del": "^5.1.0",
@@ -67,7 +64,13 @@
     "gulp": "^4.0.0",
     "gulp-cli": "^2.0.1",
     "istanbul": "^0.4.5",
-    "remap-istanbul": "^0.13.0",
+    "remap-istanbul": "^0.13.0"
+  },
+  "dependencies": {
+    "@types/tmp": "^0.1.0",
+    "axios": "^0.19.0",
+    "dom-parser": "^0.1.5",
+    "node-html-parser": "^1.1.12",
     "tmp": "^0.1.0"
   }
 }

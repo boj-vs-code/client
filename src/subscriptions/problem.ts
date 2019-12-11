@@ -6,7 +6,7 @@ import { getProblemNumber } from "../lib";
 import { ViewManager } from "../views";
 
 const showProblemInformationSubscription = vscode.commands.registerCommand(
-  "extension.showProblemInformation",
+  "bojvscode.showProblemInformation",
   async () => {
     const problem = await BOJ.getProblem(getProblemNumber());
     ViewManager.show("PROBLEM_VIEW");

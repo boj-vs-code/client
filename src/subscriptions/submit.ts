@@ -4,7 +4,7 @@ import { log } from "util";
 import { submitBOJ } from "../lib/submit";
 
 const submitSubscription = vscode.commands.registerCommand(
-  "extension.submitBOJ",
+  "bojvscode.submitBOJ",
   () => {
     submitBOJ().catch(() => {
       log("Timeout.. ㅠ");

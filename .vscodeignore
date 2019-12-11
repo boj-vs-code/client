@@ -6,3 +6,7 @@ vsc-extension-quickstart.md
 **/jsconfig.json
 **/*.map
 **/.eslintrc.json
+.github
+.codacy.yml
+.stickler.yml
+out/test/**
