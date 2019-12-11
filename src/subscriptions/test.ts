@@ -7,7 +7,7 @@ import BOJ from "../api/boj";
 import { ExecutorManager } from "../executors/manager";
 
 const executeTestSubscription = vscode.commands.registerCommand(
-  "extension.executeTest",
+  "bojvscode.executeTest",
   async () => {
     const problem = await BOJ.getProblem(getProblemNumber());
     if (problem === undefined) {

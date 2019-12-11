@@ -8,6 +8,8 @@
 
 폴더 내에 `.boj` 파일이 있다면 확장프로그램이 활성화 됩니다!
 
+![boj-welcome!](https://user-images.githubusercontent.com/26626194/70371570-03177580-1918-11ea-8e74-0c541f896e85.png)
+
 [백준 온라인 저지]: https://boj.kr
 
 ## Features
