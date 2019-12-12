@@ -16,8 +16,12 @@
 
 ### 문제 정보 보기
 
-Command Palette: `BOJ: Show Problem Information`
+Command Palette: `BOJ: Show Problem Information`  
 Key Binding: `ctrl+alt+i`
+
+파일명이 **문제번호.c** 혹은 **문제번호-추가적인설명.c** 같은 형식으로 되어있는 경우에만 문제 번호를 인식할 수 있습니다! 추가적인 설명 부분은 실제로 형식이 정해져 있지는 않습니다.
+
+(e.g. `1000.c`, `1000-a+b.c`)
 
 ![Show problem information](https://user-images.githubusercontent.com/26626194/70360470-fcf6aa00-18c1-11ea-86c3-af1d016aeef5.png)
 

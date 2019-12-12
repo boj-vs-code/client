@@ -13,7 +13,7 @@
     "Other"
   ],
   "activationEvents": [
-    "workspaceContains:/.boj"
+    "workspaceContains:.boj"
   ],
   "preview": true,
   "main": "./out/extension.js",

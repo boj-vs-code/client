@@ -4,6 +4,18 @@
 
 To be released.
 
+## 0.2.3
+
+To be released.
+
+- Fix a bug where `lib.getProblemNumber()` doesn't work as well because of platform.
+
+## 0.2.2
+
+Released on 2019-12-11
+
+- Fix a bug where the extension activation failed.
+
 ## 0.2.0
 
 Released on 2019-12-07

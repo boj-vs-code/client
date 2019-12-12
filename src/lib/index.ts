@@ -2,6 +2,7 @@ import { window, TextEditor, workspace, extensions } from "vscode";
 
 import * as vscode from "vscode";
 import * as data from "../resources/languages.json";
+import * as path from "path";
 
 export interface LanguageInfo {
   name: string;
@@ -38,9 +39,9 @@ export function getSource(): string {
 }
 
 export function getProblemNumber(): number {
-  const edtior = <TextEditor>window.activeTextEditor;
-  const filePath = edtior.document.fileName;
-  const fileName = filePath.split("/").slice(-1)[0];
+  const editor = <TextEditor>window.activeTextEditor;
+  const filePath = editor.document.fileName;
+  const fileName = path.parse(filePath).name;
 
   if (hasProblemNumberAndOthers(fileName)) {
     return Number(fileName.split("-")[0]);
