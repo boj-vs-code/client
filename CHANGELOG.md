@@ -6,7 +6,7 @@ To be released.
 
 ## 0.2.3
 
-To be released.
+Released on 2019-12.12
 
 - Fix a bug where `lib.getProblemNumber()` doesn't work as well because of platform.
 
