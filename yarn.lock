@@ -2228,10 +2228,10 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-node-html-parser@^1.1.12:
-  version "1.1.16"
-  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-1.1.16.tgz#59f072bcabf1cf6e23f7878a76e0c3b81b9194fa"
-  integrity sha512-cfqTZIYDdp5cGh3NvCD5dcEDP7hfyni7WgyFacmDynLlIZaF3GVlRk8yMARhWp/PobWt1KaCV8VKdP5LKWiVbg==
+node-html-parser@^1.2.16:
+  version "1.2.16"
+  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-1.2.16.tgz#009ffb38915a8aed01693bec2e39933aeb7f6aba"
+  integrity sha512-TrLpGov7J9hBdWWREudBreragmRPq2Q5b19Ly66XoZVUZbb8JXkIqHkPbTHKicuVC8jNnkP4bRnNVik4mkPahw==
   dependencies:
     he "1.1.1"
 
