@@ -57,7 +57,7 @@
     "vscode": "^1.1.37",
     "@types/glob": "^7.1.1",
     "@types/gulp": "^4.0.6",
-    "axios-mock-adapter": "^1.18.1",
+    "axios-mock-adapter": "^1.18.2",
     "decache": "^4.5.1",
     "del": "^5.1.0",
     "glob": "^7.1.3",
